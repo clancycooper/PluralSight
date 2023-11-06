@@ -5,6 +5,13 @@ public class Car extends Vehicle {
     private String model;
     private String carType;
 
+    public Car(String engineType, String color, int speed, int carrierCapacity, int fuelCapacity, int cargoCapacity, String make, String model, String carType) {
+        super(engineType, color, speed, carrierCapacity, fuelCapacity, cargoCapacity);
+        this.make = make;
+        this.model = model;
+        this.carType = carType;
+    }
+
     public String getMake() {
         return make;
     }

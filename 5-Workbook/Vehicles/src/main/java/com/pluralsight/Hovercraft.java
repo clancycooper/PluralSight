@@ -7,6 +7,11 @@ public class Hovercraft extends Vehicle {
         return waterResistance;
     }
 
+    public Hovercraft(String engineType, String color, int speed, int carrierCapacity, int fuelCapacity, int cargoCapacity, String waterResistance) {
+        super(engineType, color, speed, carrierCapacity, fuelCapacity, cargoCapacity);
+        this.waterResistance = waterResistance;
+    }
+
     public void setWaterResistance(String waterResistance) {
         this.waterResistance = waterResistance;
     }
