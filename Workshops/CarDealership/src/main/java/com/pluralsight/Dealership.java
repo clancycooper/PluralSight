@@ -68,22 +68,22 @@ public class Dealership {
         return null;
     }
 
-    public void getAllVehicles() {
+    public static ArrayList<Vehicle> getAllVehicles() {
+        ArrayList<Vehicle> allVehicles = new ArrayList<>();
         //getInventory
-        for (int i = 0; i < inventory.size(); i++) {
-            Vehicle allVehicles = inventory.get(i);
-            //System.out.println(allVehicles);
+        for (Vehicle vehicles : inventory) {
+            allVehicles.add(vehicles);
         }
+        return allVehicles;
     }
 
-    public void addVehicle(Vehicle vehicle) {
+    public static void addVehicle(Vehicle vehicle) {
         inventory.add(vehicle);
 
     }
 
-    public static Vehicle removeVehicle(Vehicle vehicle) {
-        int i = 0;
-        return inventory.remove(i);
+    public void removeVehicle(Vehicle vehicle) {
+        inventory.remove(vehicle);
     }
 
 }

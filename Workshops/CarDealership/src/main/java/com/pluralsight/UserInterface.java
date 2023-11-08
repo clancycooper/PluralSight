@@ -1,87 +1,124 @@
 package com.pluralsight;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import static com.pluralsight.Dealership.getAllVehicles;
+
+
 public class UserInterface {
-    private int vin;
-    private int year;
-    private String make;
-    private String model;
-    private String vehicleType;
-    private String color;
-    private int odometer;
-    private double price;
+    Scanner scanner = new Scanner(System.in);
 
-    public void Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int odometer, double price) {
-        this.vin = vin;
-        this.year = year;
-        this.make = make;
-        this.model = model;
-        this.vehicleType = vehicleType;
-        this.color = color;
-        this.odometer = odometer;
-        this.price = price;
+    private static void init() throws IOException {
+        DealershipFileManager newDealership = new DealershipFileManager();
+        newDealership.getDealership();
     }
 
-    public int getVin() {
-        return vin;
+    public void display() throws IOException {
+        init();
+        menu();
+        int menuSwap = scanner.nextInt();
+        switch(menuSwap) {
+            case 1:
+                processGetAllVehicleRequest();
+                break;
+            case 2:
+                processAddVehicleRequest();
+                break;
+            case 3:
+                processRemoveVehicleRequest();
+                break;
+            case 4:
+                processGetByPriceRequest();
+                break;
+            case 5:
+                processGetByMakeModelRequest();
+                break;
+            case 6:
+                processGetByYearRequest();
+                break;
+            case 7:
+                processGetByColorRequest();
+                break;
+            case 8:
+                processGetByMileageRequest();
+                break;
+            case 9:
+                processGetByVehicleTypeRequest();
+                break;
+            case 0:
+                System.exit(0);
+            default:
+                System.out.println("Sorry, please try again using a number between 0 - 9!");
+                menu();
+                break;
+        }
     }
 
-    public void setVin(int vin) {
-        this.vin = vin;
+    public void processGetByPriceRequest() {
+
     }
 
-    public int getYear() {
-        return year;
+    public void processGetByMakeModelRequest() {
+
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void processGetByYearRequest() {
+
     }
 
-    public String getMake() {
-        return make;
+    public void processGetByColorRequest() {
+
     }
 
-    public void setMake(String make) {
-        this.make = make;
+    public void processGetByMileageRequest() {
+
     }
 
-    public String getModel() {
-        return model;
+    public void processGetByVehicleTypeRequest() {
+
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public static void processGetAllVehicleRequest() throws IOException {
+    getAllVehicles();
+    displayVehicles(getAllVehicles());
     }
 
-    public String getVehicleType() {
-        return vehicleType;
+    public void processAddVehicleRequest() {
+
     }
 
-    public void setVehicleType(String vehicleType) {
-        this.vehicleType = vehicleType;
+    public void processRemoveVehicleRequest() {
+
     }
 
-    public String getColor() {
-        return color;
+    public static void displayVehicles(ArrayList<Vehicle> displayList) throws IOException {
+        int i = 1;
+        for(Vehicle vehicle: displayList) {
+            System.out.println(i + ") VIN: " + vehicle.getVin() +
+                    " Year: " + vehicle.getYear() +
+                    " Make: " + vehicle.getMake() +
+                    " Model: " + vehicle.getModel() +
+                    " Type: " + vehicle.getVehicleType() +
+                    " Color: " + vehicle.getColor() +
+                    " Mileage: " + vehicle.getOdometer() +
+                    " Price: " + vehicle.getPrice());
+        }
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public int getOdometer() {
-        return odometer;
-    }
-
-    public void setOdometer(int odometer) {
-        this.odometer = odometer;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    public void menu() {
+        String welcome = "Welcome to ClancysList, the one stop shop for all things used vehicles.\n" +
+                "Enter the number of the menu option you wish to view: \n" +
+                "1) View All Vehicles\n" +
+                "2) Add A Vehicle\n" +
+                "3) Remove A Vehicle\n" +
+                "4) Filter Vehicles By Price\n" +
+                "5) Filter Vehicles By Make/Model\n" +
+                "6) Filter Vehicles By Year\n" +
+                "7) Filter Vehicles By Color\n" +
+                "8) Filter Vehicles By Mileage\n" +
+                "9) Filter Vehicles By Type\n" +
+                "0) Exit";
     }
 }
