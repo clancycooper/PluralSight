@@ -6,7 +6,7 @@ public class Dealership {
     private String name;
     private String address;
     private String phone;
-    private ArrayList<Vehicle> inventory;
+    private static ArrayList<Vehicle> inventory;
 
 
     public Dealership(String name, String address, String phone) {
@@ -82,8 +82,8 @@ public class Dealership {
     }
 
     public static Vehicle removeVehicle(Vehicle vehicle) {
-        return vehicle;
-        //.remove
+        int i = 0;
+        return inventory.remove(i);
     }
 
 }

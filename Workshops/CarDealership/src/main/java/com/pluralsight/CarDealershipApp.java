@@ -1,5 +1,7 @@
 package com.pluralsight;
+
 import java.io.IOException;
+
 import static com.pluralsight.DealershipFileManager.getDealership;
 import static com.pluralsight.DealershipFileManager.getInventory;
 
