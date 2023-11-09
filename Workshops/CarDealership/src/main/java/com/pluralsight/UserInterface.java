@@ -16,7 +16,6 @@ public class UserInterface {
     }
 
     public void display() throws IOException {
-        init();
         menu();
         int menuSwap = scanner.nextInt();
         switch(menuSwap) {
@@ -81,8 +80,9 @@ public class UserInterface {
     }
 
     public static void processGetAllVehicleRequest() throws IOException {
-    getAllVehicles();
-    displayVehicles(getAllVehicles());
+        init();
+        System.out.println("Displaying all vehicles: ");
+        displayVehicles(getAllVehicles());
     }
 
     public void processAddVehicleRequest() {
@@ -94,9 +94,8 @@ public class UserInterface {
     }
 
     public static void displayVehicles(ArrayList<Vehicle> displayList) throws IOException {
-        int i = 1;
         for(Vehicle vehicle: displayList) {
-            System.out.println(i + ") VIN: " + vehicle.getVin() +
+            System.out.println(" VIN: " + vehicle.getVin() +
                     " Year: " + vehicle.getYear() +
                     " Make: " + vehicle.getMake() +
                     " Model: " + vehicle.getModel() +
@@ -107,7 +106,7 @@ public class UserInterface {
         }
     }
 
-    public void menu() {
+    public static void menu() {
         String welcome = "Welcome to ClancysList, the one stop shop for all things used vehicles.\n" +
                 "Enter the number of the menu option you wish to view: \n" +
                 "1) View All Vehicles\n" +
@@ -120,5 +119,6 @@ public class UserInterface {
                 "8) Filter Vehicles By Mileage\n" +
                 "9) Filter Vehicles By Type\n" +
                 "0) Exit";
+        System.out.println(welcome);
     }
 }

@@ -1,9 +1,9 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+
+import static com.pluralsight.Dealership.inventory;
 
 public class DealershipFileManager {
     public static String csv;
@@ -26,23 +26,28 @@ public class DealershipFileManager {
                 int odometer = Integer.parseInt(dealershipSplit[6]);
                 double price = Double.parseDouble(dealershipSplit[7]);
                 Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, price);
-                dealership.addVehicle(vehicle);
-
-                System.out.println(vin + "|" + year + "|" + make + "|" + model + "|" + vehicleType + "|" + color + "|" + odometer + "|" + price);
+                inventory.add(vehicle);
 
             } else {
                 String name = dealershipSplit[0];
                 String address = dealershipSplit[1];
                 String phone = dealershipSplit[2];
                 dealership = new Dealership(name, address, phone);
-
-                System.out.println(name + "|" + address + "|" + phone);
             }
         }
         infoLine.close();
-        //public static void saveDealership() {
+    }
+        public static void saveDealership() throws IOException {
+            FileWriter writeFile = new FileWriter("src/main/resources/inventory.csv", true);
+            BufferedWriter saveFile = new BufferedWriter(writeFile);
+            saveFile.write(dealership.getName() + "|" + dealership.getAddress() + "|" + dealership.getPhone());
+            saveFile.newLine();
+            for(Vehicle vehicle : inventory) {
+                String saveVehicle = (vehicle.getVin() + "|" + vehicle.getYear() + "|" + vehicle.getMake() + "|" + vehicle.getModel() + "|" + vehicle.getVehicleType() + "|" + vehicle.getColor() + "|" + vehicle.getOdometer() + "|" + vehicle.getPrice());
+                saveFile.write(saveVehicle);
+                saveFile.newLine();
+            }
+            saveFile.close();
+       }
 
-       // }
-
-}
 }

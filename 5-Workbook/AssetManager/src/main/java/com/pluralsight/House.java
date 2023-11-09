@@ -31,7 +31,7 @@ public class House extends Asset {
             System.out.println("3 - Fair");
         }
         else {
-            System.out.println("1 - Poor");
+            System.out.println("4 - Poor");
         }
         return condition;
     }
