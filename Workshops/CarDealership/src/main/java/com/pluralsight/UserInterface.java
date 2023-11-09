@@ -4,18 +4,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static com.pluralsight.Dealership.getAllVehicles;
+import static com.pluralsight.Dealership.*;
 
 
 public class UserInterface {
-    Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
 
     private static void init() throws IOException {
         DealershipFileManager newDealership = new DealershipFileManager();
         newDealership.getDealership();
     }
 
-    public void display() throws IOException {
+    public static void display() throws IOException {
+        init();
         menu();
         int menuSwap = scanner.nextInt();
         switch(menuSwap) {
@@ -55,70 +56,69 @@ public class UserInterface {
         }
     }
 
-    public void processGetByPriceRequest() {
+    public static void processGetByPriceRequest() throws IOException {
+        getVehiclesByPrice();
+    }
+
+    public static void processGetByMakeModelRequest() throws IOException {
+        getVehiclesByMakeModel();
+    }
+
+    public static void processGetByYearRequest() {
 
     }
 
-    public void processGetByMakeModelRequest() {
+    public static void processGetByColorRequest() {
 
     }
 
-    public void processGetByYearRequest() {
+    public static void processGetByMileageRequest() {
 
     }
 
-    public void processGetByColorRequest() {
-
-    }
-
-    public void processGetByMileageRequest() {
-
-    }
-
-    public void processGetByVehicleTypeRequest() {
+    public static void processGetByVehicleTypeRequest() {
 
     }
 
     public static void processGetAllVehicleRequest() throws IOException {
-        init();
-        System.out.println("Displaying all vehicles: ");
-        displayVehicles(getAllVehicles());
+        getAllVehicles();
     }
 
-    public void processAddVehicleRequest() {
-
+    public static void processAddVehicleRequest() {
+    //saveDealership
     }
 
-    public void processRemoveVehicleRequest() {
-
+    public static void processRemoveVehicleRequest() {
+    //saveDealership
     }
 
-    public static void displayVehicles(ArrayList<Vehicle> displayList) throws IOException {
-        for(Vehicle vehicle: displayList) {
+    public static void displayVehicles(ArrayList<Vehicle> allVehicles) throws IOException {
+        for(Vehicle vehicle: inventory) {
             System.out.println(" VIN: " + vehicle.getVin() +
-                    " Year: " + vehicle.getYear() +
-                    " Make: " + vehicle.getMake() +
-                    " Model: " + vehicle.getModel() +
-                    " Type: " + vehicle.getVehicleType() +
-                    " Color: " + vehicle.getColor() +
-                    " Mileage: " + vehicle.getOdometer() +
-                    " Price: " + vehicle.getPrice());
+                    " | Year: " + vehicle.getYear() +
+                    " | Make: " + vehicle.getMake() +
+                    " | Model: " + vehicle.getModel() +
+                    " | Type: " + vehicle.getVehicleType() +
+                    " | Color: " + vehicle.getColor() +
+                    " | Mileage: " + vehicle.getOdometer() +
+                    " | Price: " + vehicle.getPrice());
         }
     }
 
     public static void menu() {
-        String welcome = "Welcome to ClancysList, the one stop shop for all things used vehicles.\n" +
-                "Enter the number of the menu option you wish to view: \n" +
-                "1) View All Vehicles\n" +
-                "2) Add A Vehicle\n" +
-                "3) Remove A Vehicle\n" +
-                "4) Filter Vehicles By Price\n" +
-                "5) Filter Vehicles By Make/Model\n" +
-                "6) Filter Vehicles By Year\n" +
-                "7) Filter Vehicles By Color\n" +
-                "8) Filter Vehicles By Mileage\n" +
-                "9) Filter Vehicles By Type\n" +
-                "0) Exit";
+        String welcome = """
+                Welcome to ClancysList, the one stop shop for all things used vehicles.
+                Enter the number of the menu option you wish to view:\s
+                1) View All Vehicles
+                2) Add A Vehicle
+                3) Remove A Vehicle
+                4) Filter Vehicles By Price
+                5) Filter Vehicles By Make/Model
+                6) Filter Vehicles By Year
+                7) Filter Vehicles By Color
+                8) Filter Vehicles By Mileage
+                9) Filter Vehicles By Type
+                0) Exit""";
         System.out.println(welcome);
     }
 }

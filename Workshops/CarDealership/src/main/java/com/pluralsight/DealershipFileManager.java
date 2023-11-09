@@ -1,14 +1,12 @@
 package com.pluralsight;
 
 import java.io.*;
-import java.util.ArrayList;
 
-import static com.pluralsight.Dealership.inventory;
+import static com.pluralsight.Dealership.addVehicle;
 
 public class DealershipFileManager {
     public static String csv;
     public static Dealership dealership;
-    public static ArrayList<Vehicle> vehicle = new ArrayList<>();
 
     public void getDealership() throws IOException {
         BufferedReader infoLine = new BufferedReader(new FileReader("src/main/resources/inventory.csv"));
@@ -26,7 +24,7 @@ public class DealershipFileManager {
                 int odometer = Integer.parseInt(dealershipSplit[6]);
                 double price = Double.parseDouble(dealershipSplit[7]);
                 Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, price);
-                inventory.add(vehicle);
+                addVehicle(vehicle);
 
             } else {
                 String name = dealershipSplit[0];
@@ -37,17 +35,11 @@ public class DealershipFileManager {
         }
         infoLine.close();
     }
-        public static void saveDealership() throws IOException {
-            FileWriter writeFile = new FileWriter("src/main/resources/inventory.csv", true);
-            BufferedWriter saveFile = new BufferedWriter(writeFile);
-            saveFile.write(dealership.getName() + "|" + dealership.getAddress() + "|" + dealership.getPhone());
-            saveFile.newLine();
-            for(Vehicle vehicle : inventory) {
-                String saveVehicle = (vehicle.getVin() + "|" + vehicle.getYear() + "|" + vehicle.getMake() + "|" + vehicle.getModel() + "|" + vehicle.getVehicleType() + "|" + vehicle.getColor() + "|" + vehicle.getOdometer() + "|" + vehicle.getPrice());
-                saveFile.write(saveVehicle);
-                saveFile.newLine();
-            }
-            saveFile.close();
-       }
-
+    public static void saveDealership(int vin,int year,String make,String model,String vehicleType, String color, int mileage, double price)throws IOException{
+        FileWriter writeFile = new FileWriter("src/main/resources/inventory.csv", true);
+        BufferedWriter saveFile = new BufferedWriter(writeFile);
+        writeFile.write("\n"+ vin + "|" + year + "|" + make + "|" + model + "|" + vehicleType + "|" + color + "|" + mileage + "|" + price);
+        saveFile.close();
+    }
 }
+
