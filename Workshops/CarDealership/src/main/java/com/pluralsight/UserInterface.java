@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static com.pluralsight.Dealership.*;
+import static com.pluralsight.DealershipFileManager.getDealership;
 
 
 public class UserInterface {
     static Scanner scanner = new Scanner(System.in);
 
-    private static void init() throws IOException {
-        DealershipFileManager newDealership = new DealershipFileManager();
-        newDealership.getDealership();
+    public static void init() throws IOException {
+        getDealership();
     }
 
     public static void display() throws IOException {
@@ -64,36 +64,36 @@ public class UserInterface {
         getVehiclesByMakeModel();
     }
 
-    public static void processGetByYearRequest() {
-
+    public static void processGetByYearRequest() throws IOException {
+        getVehiclesByYear();
     }
 
-    public static void processGetByColorRequest() {
-
+    public static void processGetByColorRequest() throws IOException {
+        getVehiclesByColor();
     }
 
-    public static void processGetByMileageRequest() {
-
+    public static void processGetByMileageRequest() throws IOException {
+        getVehiclesByMileage();
     }
 
-    public static void processGetByVehicleTypeRequest() {
-
+    public static void processGetByVehicleTypeRequest() throws IOException {
+        getVehiclesByType();
     }
 
     public static void processGetAllVehicleRequest() throws IOException {
         getAllVehicles();
     }
 
-    public static void processAddVehicleRequest() {
-    //saveDealership
+    public static void processAddVehicleRequest() throws IOException {
+        addVehicle();
     }
 
-    public static void processRemoveVehicleRequest() {
-    //saveDealership
+    public static void processRemoveVehicleRequest() throws IOException {
+        removeVehicle();
     }
 
     public static void displayVehicles(ArrayList<Vehicle> allVehicles) throws IOException {
-        for(Vehicle vehicle: inventory) {
+        for (Vehicle vehicle : allVehicles) {
             System.out.println(" VIN: " + vehicle.getVin() +
                     " | Year: " + vehicle.getYear() +
                     " | Make: " + vehicle.getMake() +
@@ -104,6 +104,7 @@ public class UserInterface {
                     " | Price: " + vehicle.getPrice());
         }
     }
+
 
     public static void menu() {
         String welcome = """
