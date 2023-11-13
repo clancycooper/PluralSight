@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static com.pluralsight.DealershipFileManager.saveDealership;
+import static com.pluralsight.UserInterface.display;
 import static com.pluralsight.UserInterface.displayVehicles;
 
 
@@ -61,6 +62,21 @@ public class Dealership {
             }
         }
         displayVehicles(byPrice);
+
+        System.out.println("Do you want to start a new search? Y/N");
+        String userYN = scanner.nextLine();
+        if (userYN.equalsIgnoreCase("Y")) {
+            getVehiclesByPrice();
+        }
+        else if (userYN.equalsIgnoreCase("N")) {
+            display();
+        }
+        else {
+            System.out.println("Invalid Response. Rerouting to Main Menu.");
+            display();
+
+
+        }
     }
 
     public static void getVehiclesByMakeModel() throws IOException {
@@ -76,6 +92,21 @@ public class Dealership {
             }
         }
         displayVehicles(byMakeModel);
+
+        System.out.println("Do you want to start a new search? Y/N");
+        String userYN = scanner.nextLine();
+        if (userYN.equalsIgnoreCase("Y")) {
+            getVehiclesByMakeModel();
+        }
+        else if (userYN.equalsIgnoreCase("N")) {
+            display();
+        }
+        else {
+            System.out.println("Invalid Response. Rerouting to Main Menu.");
+            display();
+
+
+        }
     }
 
     public static void getVehiclesByYear() throws IOException {
@@ -85,12 +116,28 @@ public class Dealership {
         int year1 = scanner.nextInt();
         System.out.println("Please enter the latest year: ");
         int year2 = scanner.nextInt();
+        scanner.nextLine();
         for (Vehicle vehicles : inventory) {
             if ((vehicles.getYear() >= year1) && (vehicles.getYear() <= year2)) {
                 byYear.add(vehicles);
             }
         }
         displayVehicles(byYear);
+
+        System.out.println("Do you want to start a new search? Y/N");
+        String userYN = scanner.nextLine();
+        if (userYN.equalsIgnoreCase("Y")) {
+            getVehiclesByYear();
+        }
+        else if (userYN.equalsIgnoreCase("N")) {
+            display();
+        }
+        else {
+            System.out.println("Invalid Response. Rerouting to Main Menu.");
+            display();
+
+
+        }
     }
 
     public static void getVehiclesByColor() throws IOException {
@@ -104,6 +151,21 @@ public class Dealership {
             }
         }
         displayVehicles(byColor);
+
+        System.out.println("Do you want to start a new search? Y/N");
+        String userYN = scanner.nextLine();
+        if (userYN.equalsIgnoreCase("Y")) {
+            getVehiclesByColor();
+        }
+        else if (userYN.equalsIgnoreCase("N")) {
+            display();
+        }
+        else {
+            System.out.println("Invalid Response. Rerouting to Main Menu.");
+            display();
+
+
+        }
     }
 
     public static void getVehiclesByMileage() throws IOException {
@@ -111,14 +173,29 @@ public class Dealership {
         System.out.println("Filter Vehicles by Mileage:\n" +
                 "Please enter the minimum Mileage: ");
         int minMiles = scanner.nextInt();
-        System.out.println("Please enter the latest year: ");
+        System.out.println("Please enter the maximum Mileage: ");
         int maxMiles = scanner.nextInt();
+        scanner.nextLine();
         for (Vehicle vehicles : inventory) {
             if ((vehicles.getOdometer() >= minMiles) && (vehicles.getOdometer() <= maxMiles)) {
                 byMileage.add(vehicles);
             }
         }
         displayVehicles(byMileage);
+        System.out.println("Do you want to start a new search? Y/N");
+        String userYN = scanner.nextLine();
+        if (userYN.equalsIgnoreCase("Y")) {
+            getVehiclesByMileage();
+        }
+        else if (userYN.equalsIgnoreCase("N")) {
+            display();
+        }
+        else {
+            System.out.println("Invalid Response. Rerouting to Main Menu.");
+            display();
+
+
+        }
     }
 
     public static void getVehiclesByType() throws IOException {
@@ -132,10 +209,35 @@ public class Dealership {
             }
         }
         displayVehicles(byType);
+
+        System.out.println("Do you want to start a new search? Y/N");
+        String userYN = scanner.nextLine();
+        if (userYN.equalsIgnoreCase("Y")) {
+            getVehiclesByType();
+        }
+        else if (userYN.equalsIgnoreCase("N")) {
+            display();
+        }
+        else {
+            System.out.println("Invalid Response. Rerouting to Main Menu.");
+            display();
+
+
+        }
     }
 
     public static void getAllVehicles() throws IOException {
         displayVehicles(inventory);
+
+        System.out.println("Press H to Return to Main Menu");
+        String userButton = scanner.nextLine();
+        if (userButton.equalsIgnoreCase("H")) {
+            display();
+        }
+        else {
+            display();
+        }
+
     }
 
     public static void addVehicle() throws IOException {
