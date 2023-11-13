@@ -1,7 +1,9 @@
 package com.pluralsight;
 
+import static com.pluralsight.Vehicle.getPrice;
+
 public class SalesContract extends Contract{
-    protected double salesTaxAmount = 0.05;
+    protected double salesTaxAmount;
     protected double recordingFee = 100.00;
     protected double processingFee;
 
@@ -16,6 +18,7 @@ public class SalesContract extends Contract{
     }
 
     public double getSalesTaxAmount() {
+        double salesTaxAmount = (getPrice() / .05) / 100;
         return salesTaxAmount;
     }
 
@@ -24,12 +27,22 @@ public class SalesContract extends Contract{
     }
 
     public double getProcessingFee() {
+
+        //if 295 for vehicles under 10,000 and 495 for all others
+
+        if (getPrice() < 10000) {
+            processingFee = 295;
+        }
+        else {
+            processingFee = 495;
+        }
         return processingFee;
+
     }
 
     public void setProcessingFee(double processingFee) {
         this.processingFee = processingFee;
-        //if 295 for vehicles under 10,000 and 495 for all others
+
     }
 
     public boolean isFinance() {
@@ -39,8 +52,33 @@ public class SalesContract extends Contract{
     public void setFinance(boolean finance) {
         this.finance = finance;
     }
-    //@Override
-    //        public double getValue() {
-    //            return (originalCost / squareFoot) + (.25 * lotSize);
-    //        }
+
+
+    @Override
+    public double getTotalPrice() {
+        double totalPrice = getPrice() + salesTaxAmount + recordingFee + processingFee;
+        return totalPrice;
+    }
+
+    @Override
+    public double getMonthlyPayment() {
+        double monthlyLoanPayment = 0.0;
+
+        if (isFinance() && getPrice() >= 10000) {
+            double interest = (getTotalPrice() / 4.25) / 100;
+            double monthly = getTotalPrice() /48;
+            monthlyLoanPayment = interest + monthly;
+        }
+        else if (isFinance() && getPrice() < 10000) {
+            double interest = (getTotalPrice() / 5.25) / 100;
+            double monthly = getTotalPrice() /24;
+            monthlyLoanPayment = interest + monthly;
+        }
+        else {
+            monthlyLoanPayment = 0.0;
+        }
+
+        return monthlyLoanPayment;
+    }
+
 }

@@ -266,7 +266,15 @@ public class Dealership {
         Vehicle newVehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, price);
         inventory.add(newVehicle);
         saveDealership(vin, year, make, model, vehicleType, color, odometer, price);
-        System.out.println("Your vehicle has been added to our inventory!");
+        System.out.println("Your vehicle has been added to our inventory! Would you like to add another? Y/N");
+
+        String userYN = scanner.nextLine();
+        if (userYN.equalsIgnoreCase("Y")) {
+            addVehicle();
+        }
+        else {
+            display();
+        }
     }
 
     public static void removeVehicle() throws IOException {
