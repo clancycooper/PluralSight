@@ -43,4 +43,14 @@ public class CreditCard implements Valuable {
     public void pay(double amount) {
 
     }
+
+    @Override
+    public double getValue() {
+        return Valuable.super.getValue();
+    }
+
+    @Override
+    public int compareTo(Valuable o) {
+        return 0;
+    }
 }

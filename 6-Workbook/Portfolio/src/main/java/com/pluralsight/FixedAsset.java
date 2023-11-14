@@ -27,6 +27,11 @@ public abstract class FixedAsset implements Valuable{
 
     @Override
     public double getValue() {
-        return Valuable.super.getValue();
+        return marketValue;
+    }
+
+    @Override
+    public int compareTo(Valuable o) {
+        return Double.compare(this.getValue(), o.getValue());
     }
 }
