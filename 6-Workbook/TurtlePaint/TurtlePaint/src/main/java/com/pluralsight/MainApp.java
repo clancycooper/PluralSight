@@ -17,16 +17,7 @@ public class MainApp
         for (int i = 0; i < 4; i++) {
                 turtle.forward(100);  // Move forward 100 pixels
                 turtle.turnRight(90); // Turn right (or left) 90 degrees
-            }
         }
-
-        World world = new World();
-        Turtle newTurtle = new Turtle(world);
-        int sides = 100; // Number of sides to simulate a circle
-        // Loop through the number of sides to draw the circle
-        for(int i = 0; i < sides; i++) {
-        newTurtle.forward(5);  // Move forward a small distance
-        newTurtle.turnRight(360.0 / sides); // Turn slightly to the right
     }
 }
 
@@ -60,4 +51,4 @@ public class MainApp
 
         turtle.penDown();
         turtle.forward(hypotenuse);*/
-}
+
