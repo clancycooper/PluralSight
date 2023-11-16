@@ -90,7 +90,7 @@ public class Turtle {
         this.world = w;
         this.color = Turtle.base[Turtle.baseIndex];
         Turtle.baseIndex = (Turtle.baseIndex+1) % Turtle.base.length;
-        this.penWidth = 1;
+        this.penWidth = 2;
         this.isdown = true;
         this.shellSize = 8;
 
@@ -389,6 +389,40 @@ public class Turtle {
         world.turtleMoved();
         this.pause();
     }
+
+    public static void drawSquare(){
+        //Code for drawing a red Square
+        World world = new World();
+        Turtle turtle = new Turtle(world);
+        turtle.setColor(Color.red);
+        turtle.setPenWidth(5);
+        turtle.setDelay(1);
+
+        for (int i = 0; i < 4; i++) {
+            turtle.forward(200);
+            turtle.turnRight(90);
+        }
+    }
+
+    public static void drawCircle() {
+        // Code for drawing a blue circle
+        World world = new World();
+        Turtle turtle = new Turtle(world);
+        turtle.setColor(Color.blue);
+        turtle.setPenWidth(5);
+
+        int sides = 360;
+        double angle = 360.0 / sides;
+        double distance = 2;
+        turtle.setDelay(0.0001);
+
+        for (int i = 0; i < sides; i++) {
+            turtle.forward(distance);
+            turtle.turnRight(angle);
+        }
+    }
+
+
 
     /**
      * Find out where the turtle is located

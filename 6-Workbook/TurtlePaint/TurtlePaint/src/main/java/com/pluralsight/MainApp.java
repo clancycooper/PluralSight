@@ -5,19 +5,14 @@ import com.pluralsight.forms.World;
 
 import java.awt.*;
 
+import static com.pluralsight.forms.Turtle.drawCircle;
+import static com.pluralsight.forms.Turtle.drawSquare;
+
 public class MainApp
 {
     public static void main(String[] args) {
-        //Code for drawing a red Square
-        World world = new World();
-        Turtle turtle = new Turtle(world);
-        turtle.setColor(Color.red);
-
-        // Loop four times to draw each side of the square
-        for (int i = 0; i < 4; i++) {
-                turtle.forward(100);  // Move forward 100 pixels
-                turtle.turnRight(90); // Turn right (or left) 90 degrees
-        }
+        drawSquare();
+        drawCircle();
     }
 }
 
