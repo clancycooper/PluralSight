@@ -5,14 +5,12 @@ import com.pluralsight.forms.World;
 
 import java.awt.*;
 
-import static com.pluralsight.forms.Turtle.drawCircle;
-import static com.pluralsight.forms.Turtle.drawSquare;
+import static com.pluralsight.forms.Turtle.*;
 
 public class MainApp
 {
     public static void main(String[] args) {
-        drawSquare();
-        drawCircle();
+        drawPieChart();
     }
 }
 

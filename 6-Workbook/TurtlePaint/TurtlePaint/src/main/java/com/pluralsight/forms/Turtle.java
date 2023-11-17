@@ -422,6 +422,42 @@ public class Turtle {
         }
     }
 
+    public static void drawPieChart() {
+        World world = new World();
+        Turtle turtle = new Turtle(world);
+        turtle.setColor(Color.blue);
+        turtle.setPenWidth(3);
+
+        int sides = 270;
+        double angle = 270.0 / sides;
+        double distance = 2;
+        turtle.setDelay(0.0001);
+
+        for (int i = 0; i < sides; i++) {
+            turtle.forward(distance);
+            turtle.turnRight(angle);
+        }
+
+        turtle.setColor(Color.red);
+        turtle.turnRight(90);
+        turtle.forward(115);
+        turtle.turnLeft(90);
+        turtle.forward(115);
+        turtle.turnLeft(90);
+
+        int sides2 = 90;
+        double angle2 = 90.0 / sides;
+        double distance2 = .7;
+        turtle.setDelay(0.0001);
+
+        for (int i = 0; i < sides; i++) {
+            turtle.forward(distance2);
+            turtle.turnLeft(angle2);
+        }
+
+
+    }
+
 
 
     /**
