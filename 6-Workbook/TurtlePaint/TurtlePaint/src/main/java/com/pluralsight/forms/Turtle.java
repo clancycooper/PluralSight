@@ -454,11 +454,11 @@ public class Turtle {
             turtle.forward(distance2);
             turtle.turnLeft(angle2);
         }
-
-
     }
 
+    public static void writeClancy() {
 
+    }
 
     /**
      * Find out where the turtle is located
