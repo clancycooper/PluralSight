@@ -25,10 +25,17 @@ public class MainApp {
         switch (menuSwap) {
             case "A":
                 addShape();
+                break;
             case "S":
                 saveShape();
+                break;
             case "X":
                 System.exit(0);
+                break;
+            default:
+                System.out.println("Sorry, didn't catch that.");
+                homeScreen();
+                break;
         }
     }
 
