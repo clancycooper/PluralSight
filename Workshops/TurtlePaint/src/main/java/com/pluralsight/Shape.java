@@ -49,6 +49,22 @@ public abstract class Shape {
         this.color = color;
     }
 
-    public abstract void paint();
+    public static Color parseColor(String colorString) {
+        switch (colorString) {
+            case "red":
+                return Color.RED;
+            case "blue":
+                return Color.BLUE;
+            case "green":
+                return Color.GREEN;
+            case "magenta" :
+                return Color.MAGENTA;
+            case "cyan" :
+                return Color.CYAN;
+            default:
+                return Color.BLACK;
+        }
+    }
 
+    public abstract void paint();
 }
