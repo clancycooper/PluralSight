@@ -200,19 +200,6 @@ public class World extends JFrame {
             System.err.println("Error saving file: " + e.getMessage());
         }
     }
-    //public void saveAs(String filename) {
-    //        try {
-    //            int dot = filename.lastIndexOf('.');
-    //            if (dot < 0 || dot == filename.length()-1) {
-    //                throw new IllegalArgumentException("The filename must end in a valid image extension, like .png or .jpg");
-    //            }
-    //            String ext = filename.substring(dot+1).toLowerCase();
-    //            File f = new File(filename);
-    //            ImageIO.write(this.front, ext, f);
-    //        } catch(Throwable t) {
-    //            System.err.println("Error saving file: " + t.getMessage());
-    //        }
-    //    }
 
     /**
      * To be used by Turtle class only
@@ -223,5 +210,4 @@ public class World extends JFrame {
         this.gg.drawImage(img, placement, this);
         this.blit();
     }
-
 }

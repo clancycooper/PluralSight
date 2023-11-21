@@ -41,33 +41,27 @@ public class MainApp {
         String menuSwap = scanner.nextLine().toUpperCase();
 
         switch (menuSwap) {
-            case "A":
-                addShape();
-                break;
-            case "S":
-                saveShape();
-                break;
-            case "X":
-                System.exit(0);
-                break;
-            default:
+            case "A" -> addShape();
+            case "S" -> saveShape();
+            case "X" -> System.exit(0);
+            default -> {
                 System.out.println("Sorry, didn't catch that.");
                 homeScreen();
-                break;
+            }
         }
     }
 
     public static void addShape() {
         System.out.println("""
-                    Which shape would you like to paint?
-                    C) Circle
-                    S) Square
-                    R) Rectangle
-                    X) Return to Main Menu""");
+                Which shape would you like to paint?
+                C) Circle
+                S) Square
+                R) Rectangle
+                X) Return to Main Menu""");
         String userChoice = scanner.nextLine().toUpperCase();
 
         switch (userChoice) {
-            case "C":
+            case "C" -> {
                 System.out.println("What is the radius of the circle you'd like the turtle to draw?");
                 radius = scanner.nextDouble();
                 System.out.println("How thick would you like the border width to be?" + "\n (ex: 2)");
@@ -82,15 +76,12 @@ public class MainApp {
                 scanner.nextLine();
                 location = new Point2D.Double(xCoordinate, yCoordinate);
                 color = parseColor(tempColor.toLowerCase());
-
-
                 Circle circle = new Circle(turtle, location, border, color, radius);
                 System.out.println("Here comes your turtle painter!");
                 circle.paint();
                 homeScreen();
-                break;
-
-            case "S" :
+            }
+            case "S" -> {
                 System.out.println("How thick would you like the border width to be?" + "\n (ex: 2)");
                 border = scanner.nextInt();
                 scanner.nextLine();
@@ -103,15 +94,12 @@ public class MainApp {
                 scanner.nextLine();
                 location = new Point2D.Double(xCoordinate, yCoordinate);
                 color = parseColor(tempColor);
-
-
                 Square square = new Square(turtle, location, border, color);
                 System.out.println("Here comes your turtle painter!");
                 square.paint();
                 homeScreen();
-                break;
-
-            case "R" :
+            }
+            case "R" -> {
                 System.out.println("How thick would you like the border width to be?" + "\n (ex: 2)");
                 border = scanner.nextInt();
                 scanner.nextLine();
@@ -129,13 +117,15 @@ public class MainApp {
                 scanner.nextLine();
                 location = new Point2D.Double(xCoordinate, yCoordinate);
                 color = parseColor(tempColor);
-
-
                 Rectangle rectangle = new Rectangle(turtle, location, border, color, length, width);
                 System.out.println("Here comes your turtle painter!");
                 rectangle.paint();
                 homeScreen();
-
+            }
+            default -> {
+                System.out.println("Sorry, didn't catch that.");
+                addShape();
+            }
         }
     }
 
@@ -145,7 +135,7 @@ public class MainApp {
         String filename = scanner.nextLine();
 
         world.saveAsPNG(directoryPath, filename);
-        System.out.println("Success! Your image was saved! Check it out under: Workshops/TurtlePaint/savedimages");
+        System.out.println("Success! Your image was saved! Check it out under: SavedImages/TurtlePaint/savedimages");
         homeScreen();
     }
 }

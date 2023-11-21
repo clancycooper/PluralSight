@@ -390,38 +390,6 @@ public class Turtle {
         this.pause();
     }
 
-    public static void drawSquare(){
-        //Code for drawing a red Square
-        World world = new World();
-        Turtle turtle = new Turtle(world);
-        turtle.setColor(Color.red);
-        turtle.setPenWidth(5);
-        turtle.setDelay(1);
-
-        for (int i = 0; i < 4; i++) {
-            turtle.forward(200);
-            turtle.turnRight(90);
-        }
-    }
-
-    public static void drawCircle() {
-        // Code for drawing a blue circle
-        World world = new World();
-        Turtle turtle = new Turtle(world);
-        turtle.setColor(Color.blue);
-        turtle.setPenWidth(5);
-
-        int sides = 360;
-        double angle = 360.0 / sides;
-        double distance = 2;
-        turtle.setDelay(0.0001);
-
-        for (int i = 0; i < sides; i++) {
-            turtle.forward(distance);
-            turtle.turnRight(angle);
-        }
-    }
-
     public static void drawPieChart() {
         World world = new World();
         Turtle turtle = new Turtle(world);
