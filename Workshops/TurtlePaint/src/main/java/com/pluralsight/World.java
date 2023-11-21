@@ -11,6 +11,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -180,19 +181,38 @@ public class World extends JFrame {
      * @param filename The name of the file to write
      * @throws IllegalArgumentException if any parameter is null or if the filename is not an image filename
      */
-    public void saveAs(String filename) {
+    public void saveAsPNG(String directoryPath, String filename) {
         try {
             int dot = filename.lastIndexOf('.');
-            if (dot < 0 || dot == filename.length()-1) {
-                throw new IllegalArgumentException("The filename must end in a valid image extension, like .png or .jpg");
+            if (dot < 0 || dot == filename.length() - 1 || !filename.substring(dot + 1).equalsIgnoreCase("png")) {
+                throw new IllegalArgumentException("The filename must end with '.png'");
             }
-            String ext = filename.substring(dot+1).toLowerCase();
-            File f = new File(filename);
-            ImageIO.write(this.front, ext, f);
-        } catch(Throwable t) {
-            System.err.println("Error saving file: " + t.getMessage());
+
+            File directory = new File(directoryPath);
+            if (!directory.exists()) {
+                directory.mkdirs(); // Create directories if they don't exist
+            }
+
+            File file = new File(directory, filename);
+            ImageIO.write(this.front, "png", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error saving file: " + e.getMessage());
         }
     }
+    //public void saveAs(String filename) {
+    //        try {
+    //            int dot = filename.lastIndexOf('.');
+    //            if (dot < 0 || dot == filename.length()-1) {
+    //                throw new IllegalArgumentException("The filename must end in a valid image extension, like .png or .jpg");
+    //            }
+    //            String ext = filename.substring(dot+1).toLowerCase();
+    //            File f = new File(filename);
+    //            ImageIO.write(this.front, ext, f);
+    //        } catch(Throwable t) {
+    //            System.err.println("Error saving file: " + t.getMessage());
+    //        }
+    //    }
 
     /**
      * To be used by Turtle class only

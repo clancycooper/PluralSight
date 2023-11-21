@@ -36,7 +36,7 @@ public class MainApp {
                 Welcome to Clancy's Paint-By-Turtle App!
                 What would you like to do first?
                 A) Add Shape
-                S) Save Shape
+                S) Save My Turtle Painting
                 X) Exit Program""");
         String menuSwap = scanner.nextLine().toUpperCase();
 
@@ -140,6 +140,12 @@ public class MainApp {
     }
 
     public static void saveShape() {
+        String directoryPath = "Workshops/TurtlePaint/savedimages";
+        System.out.println("Enter the filename to save the image:\n" + " Hint: Make sure to add .png to end of your filename!");
+        String filename = scanner.nextLine();
 
+        world.saveAsPNG(directoryPath, filename);
+        System.out.println("Success! Your image was saved! Check it out under: Workshops/TurtlePaint/savedimages");
+        homeScreen();
     }
 }
