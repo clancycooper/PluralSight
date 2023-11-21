@@ -94,6 +94,33 @@ public class MainApp {
                     square.paint();
                     homeScreen();
                     break;
+
+                case "R" :
+                    System.out.println("How thick would you like the border width to be?" + "\n (ex: 2)");
+                    int recBorder = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("What color would you like the border of your rectangle to be?");
+                    String tempRecColor = scanner.nextLine();
+                    System.out.println("Where would you like your rectangle to be?\n" + " Enter the x-coordinate:");
+                    double xRecCoordinate = scanner.nextDouble();
+                    System.out.println(" Enter the y-coordinate:");
+                    double yRecCoordinate = scanner.nextDouble();
+                    scanner.nextLine();
+                    System.out.println("How long should your rectangle be?");
+                    double length = scanner.nextDouble();
+                    System.out.println("How wide should your rectangle be?");
+                    double width = scanner.nextDouble();
+                    scanner.nextLine();
+                    Point2D.Double recLocation = new Point2D.Double(xRecCoordinate, yRecCoordinate);
+                    Color recColor = parseColor(tempRecColor);
+
+                    World recWorld = new World();
+                    Turtle recTurtle = new Turtle(recWorld);
+                    Rectangle rectangle = new Rectangle(recTurtle, recLocation, recBorder, recColor, length, width);
+                    System.out.println("Here comes your turtle painter!");
+                    rectangle.paint();
+                    homeScreen();
+
             }
         }
 
