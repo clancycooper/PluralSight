@@ -1,4 +1,5 @@
 # Turtle Paint Workshop
+# 🎨🐢
 ## Step 1: Diagramming the project with Figma  
 
 I opted to start with my Screen Structure (excluding the if save, for now)  
