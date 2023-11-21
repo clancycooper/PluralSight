@@ -4,7 +4,7 @@ import com.pluralsight.Turtle.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public abstract class Shape {
+public abstract class Shape implements PaintInterface {
     protected Turtle turtle;
     protected Point2D.Double location;
     protected double border;
@@ -66,5 +66,4 @@ public abstract class Shape {
         }
     }
 
-    public abstract void paint();
 }
