@@ -4,8 +4,10 @@ USE northwind;
 How many Suppliers are there?
 Answer: 29
 */
-SELECT COUNT(*) AS total_suppliers
-FROM suppliers;
+SELECT 
+    COUNT(*) AS total_suppliers
+FROM
+    suppliers;
 
 /* Q2
 What is the sum of all of the employees salaries?
@@ -52,8 +54,10 @@ GROUP BY CategoryID;
 /* Q8
 For suppliers that supply at least 5 items, what is the supplierID and # of items supplied?
 */
-SELECT SupplierID, COUNT(*) AS items_supplied
-FROM products
+SELECT 
+    SupplierID, COUNT(*) AS items_supplied
+FROM
+    products
 GROUP BY SupplierID
 HAVING COUNT(*) >= 5;
 
