@@ -16,7 +16,7 @@ ORDER BY CategoryName , ProductName;
     ProductID, ProductName, UnitPrice, SupplierName of all products > .75
     Order by ProductName
     */
-    SELECT 
+SELECT 
     ProductID, ProductName, UnitPrice, CompanyName
 FROM
     Products
@@ -30,7 +30,7 @@ ORDER BY ProductName;
     ProductID, ProductName, UnitPrice, CategoryName, CompanyName of every product
     Order by ProductName
     */
-    SELECT 
+SELECT 
     ProductID, ProductName, UnitPrice, CategoryName, CompanyName
 FROM
     Products
