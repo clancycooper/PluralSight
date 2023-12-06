@@ -1,8 +1,8 @@
 USE northwind;
 
 /* Q1
-List the product id, product name, unit price and category of all products.
-Order by Category and Product Name
+	List the product id, product name, unit price and category of all products.
+	Order by Category and Product Name
 */
 SELECT 
     ProductID, ProductName, UnitPrice, CategoryName
@@ -12,10 +12,10 @@ FROM
     Categories ON products.categoryID = categories.categoryID
 ORDER BY CategoryName , ProductName;
     
-    /* Q2
+/* Q2
     ProductID, ProductName, UnitPrice, SupplierName of all products > .75
     Order by ProductName
-    */
+*/
 SELECT 
     ProductID, ProductName, UnitPrice, CompanyName
 FROM
@@ -26,10 +26,10 @@ WHERE
     UnitPrice > .75
 ORDER BY ProductName;
     
-    /* Q3
+/* Q3
     ProductID, ProductName, UnitPrice, CategoryName, CompanyName of every product
     Order by ProductName
-    */
+*/
 SELECT 
     ProductID, ProductName, UnitPrice, CategoryName, CompanyName
 FROM
@@ -41,7 +41,7 @@ FROM
 ORDER BY ProductName;
 
 /* Q4
-What is the ProductName and CategoryName of the most expensive products?
+	What is the ProductName and CategoryName of the most expensive products?
 */
 SELECT 
     ProductName, CategoryName
@@ -56,7 +56,7 @@ WHERE
             Products);
             
 /* Q5
-List OrderID, ShipName, ShipAddress and CompanyName of every order that shipped to Germany
+	List OrderID, ShipName, ShipAddress and CompanyName of every order that shipped to Germany
 */
 SELECT 
     OrderID, ShipName, ShipAddress, CompanyName
@@ -68,7 +68,7 @@ WHERE
     ShipCountry = 'Germany';
     
 /* Q6
-OrderID, OrderDate, ShipName, ShipAddress of every order for "Sasquatch Ale"
+	OrderID, OrderDate, ShipName, ShipAddress of every order for "Sasquatch Ale"
 */
 SELECT 
     orders.OrderID, OrderDate, ShipName, ShipAddress
