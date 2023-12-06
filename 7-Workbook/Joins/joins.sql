@@ -23,7 +23,7 @@ FROM
         INNER JOIN
     Suppliers ON products.SupplierID = suppliers.SupplierID
 WHERE
-    UnitPrice > .75
+    UnitPrice > 75
 ORDER BY ProductName;
     
 /* Q3
