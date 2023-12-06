@@ -81,4 +81,4 @@ FROM
         INNER JOIN
     products ON `order details`.ProductID = products.ProductID
 WHERE
-    products.ProductID = 34;
+    products.ProductName = "Sasquatch Ale";
