@@ -75,8 +75,6 @@ SELECT
 FROM
     orders
         INNER JOIN
-    shippers ON orders.ShipVia = shippers.ShipperID
-        INNER JOIN
     `order details` ON orders.OrderID = `order details`.OrderId
         INNER JOIN
     products ON `order details`.ProductID = products.ProductID
