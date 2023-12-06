@@ -21,12 +21,12 @@ SELECT
 FROM
     orders
 WHERE
-    orders.ShipVia IN (SELECT 
-            ShipVia
+    ShipVia = (SELECT 
+            ShipperID
         FROM
-            orders
+            Shippers
         WHERE
-            ShipVia = 3);
+            CompanyName LIKE "Federal Shipping");
             
 /* Q3
 What are the order ids of the orders that ordered Sasquatch Ale?
