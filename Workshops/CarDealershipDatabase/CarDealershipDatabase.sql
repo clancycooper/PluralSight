@@ -71,8 +71,6 @@ ALTER TABLE sales_contracts
 ALTER TABLE lease_contracts
     ADD FOREIGN KEY (dealership_id) REFERENCES dealerships(dealership_id),
     ADD FOREIGN KEY (VIN) REFERENCES vehicles(VIN);
-    
-USE cardealership;
 
 -- Populating dealerships Table
 INSERT INTO dealerships (name, address, phone)
@@ -130,8 +128,6 @@ VALUES (456, 2, 'Dale', 'Senior', '789 Park Ln', 5000.00, 20000.00, '2023-11-10'
 UPDATE vehicles v
 JOIN lease_contracts l ON v.VIN = l.VIN
 SET v.lease_id = l.lease_id;
-
-USE cardealership;
 
 SELECT * FROM dealerships;
 
