@@ -21,6 +21,10 @@ VALUES (1, 123),
        (2, 456),
        (1, 789);
 
+-- Forgot to insert Tesla into inventory (oops)
+INSERT INTO inventory (dealership_id, VIN)
+VALUES (2, 321);
+
 -- Populating sales_contracts Table       
 INSERT INTO sales_contracts (VIN, dealership_id, first_name, last_name, address, sale_date)
 VALUES (123, 1, 'Banjomin', 'Joseph', '42 Aroo Rd', '2023-12-01'),
