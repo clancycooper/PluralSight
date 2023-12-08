@@ -12,6 +12,11 @@ VALUES (123, 1, 25000.00, 'Toyota', 'Pruis', 'Black', true),
        (789, 1, 35000.00, 'Mini', 'Mini Coop', 'Red', false),
        (321, 2, 65000.00, 'Tesla', 'Model S', 'Purple', true);
 
+-- Added a few new cars to help with the Find Dealership By Car Type Query
+INSERT INTO vehicles (VIN, dealership_id, price, make, model, color, sold)
+VALUES (645, 1, 55000.00, 'Mini', 'Mini Coop', 'Yellow', false),
+       (987, 2, 38500.00, 'Toyota', 'Tacoma', 'Red', false);
+
 -- Decided to add lease_id to vehicles table in addition to sales_id
 ALTER TABLE vehicles ADD COLUMN lease_id INT;
 
@@ -24,6 +29,11 @@ VALUES (1, 123),
 -- Forgot to insert Tesla into inventory (oops)
 INSERT INTO inventory (dealership_id, VIN)
 VALUES (2, 321);
+
+-- Insert for new vehicles
+INSERT INTO inventory (dealership_id, VIN)
+VALUES (1, 645),
+       (2, 987);
 
 -- Populating sales_contracts Table       
 INSERT INTO sales_contracts (VIN, dealership_id, first_name, last_name, address, sale_date)
