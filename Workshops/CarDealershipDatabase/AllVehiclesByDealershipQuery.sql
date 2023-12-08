@@ -10,7 +10,7 @@ INNER JOIN dealerships d
 WHERE
 	d.name = 'Clancys Coopers';
 
--- Vehicles for the Dealership 'Scout Used Cars
+-- Vehicles for the Dealership 'Scout Used Cars'
 SELECT
 	v.*, d.name
 FROM
