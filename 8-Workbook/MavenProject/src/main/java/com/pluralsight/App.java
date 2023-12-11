@@ -1,13 +1,22 @@
 package com.pluralsight;
-
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+public class App{
+    final static Logger logger = LogManager.getLogger(App.class);
+    public static void main(String[] args) {
+        System.setProperty("log4j.configurationFile", "log4j2.xml");
+        System.out.println("log4j.configurationFile = " + System.getProperty("log4j.configurationFile"));
+        logMeLikeYouDo("☕");
+    }
+    private static void logMeLikeYouDo(String input){
+        if(logger.isDebugEnabled()){
+            logger.debug("This is debug : " + input);
+        }
+        if(logger.isInfoEnabled()){
+            logger.info("This is info : " + input);
+        }
+        logger.warn("This is warn : " + input);
+        logger.error("This is error : " + input);
+        logger.fatal("This is fatal : " + input);
     }
 }
