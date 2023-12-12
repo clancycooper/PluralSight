@@ -7,39 +7,34 @@ public class Main {
 
     public static void main(String[] args) {
         String query = "";
-        Connection conn = null;
-        PreparedStatement prepStatement = null;
-        ResultSet result = null;
 
         System.out.println("What do you want to do?");
-        System.out.println("    Hint: Type 1, 2 or 0");
-        System.out.println("1) Show all NorthWind Products\n" +
-                            "2) Show all NorthWind Customers\n" +
-                            "0) Exit Program");
+        System.out.println("    Hint: Type 1, 2, 3 or 0");
+        System.out.println("""
+                1) Show all NorthWind Products
+                2) Show all NorthWind Customers
+                3) Show all NorthWind Categories
+                0) Exit Program""");
         String userInput = scanner.nextLine();
         switch (userInput) {
-            case "1":
-                query = "SELECT * FROM products;";
-                break;
-            case "2":
-                query = "SELECT * FROM customers ORDER BY country;";
-                break;
-            case "0":
-                System.exit(0);
-                break;
-            default:
+            case "1" -> query = "SELECT * FROM products;";
+            case "2" -> query = "SELECT * FROM customers ORDER BY country;";
+            case "3" -> query = "SELECT * FROM categories ORDER BY categoryID";
+            case "0" -> System.exit(0);
+            default -> {
                 System.out.println("Sorry, that was not a valid option");
                 System.exit(0);
+            }
         }
 
         String url = "jdbc:mysql://127.0.0.1:3306/northwind";
         String username = System.getenv("mysql_user");
-        String password = System.getenv("-redacted-");
+        String password = System.getenv("mysql_password");
 
-        try {
-            conn = DriverManager.getConnection(url, username, password);
-            prepStatement = conn.prepareStatement(query);
-            result = prepStatement.executeQuery();
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             PreparedStatement prepStatement = conn.prepareStatement(query);
+             ResultSet result = prepStatement.executeQuery()) {
+
 
             // Processing the result set
             while (result.next()) {
@@ -59,24 +54,14 @@ public class Main {
                     System.out.println("Phone:      " + result.getString(10));
                     System.out.println(" -------- ");
                 }
+                if (userInput.equals("3")) {
+                    System.out.println("Category ID:       " + result.getInt(1));
+                    System.out.println("Category Name:     " + result.getString(2));
+                    System.out.println(" -------- ");
+                }
             }
-        } catch (SQLException e) {
+        } catch(SQLException e){
             e.printStackTrace();
-        } finally {
-            // close the resources
-            try {
-                if (result != null) {
-                    result.close();
-                }
-                if (prepStatement != null) {
-                    prepStatement.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
