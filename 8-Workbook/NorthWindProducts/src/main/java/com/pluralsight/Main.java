@@ -30,8 +30,8 @@ public class Main {
 
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/northwind");
-        dataSource.setUsername("mysql_user");
-        dataSource.setPassword("mysql_password");
+        dataSource.setUsername(args[0]);
+        dataSource.setPassword(args[1]);
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement prepStatement = conn.prepareStatement(query);
