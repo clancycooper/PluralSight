@@ -10,14 +10,21 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class CarDealershipApp {
-    static BasicDataSource dataSource = new BasicDataSource();
     static Scanner scanner = new Scanner(System.in);
     static String userInput;
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/cardealership");
+        dataSource.setUsername(args[0]);
+        dataSource.setPassword(args[1]);
+        DealershipDAO dealershipManager = new DealershipDAO(dataSource);
+        VehiclesDAO vehiclesManager = new VehiclesDAO(dataSource);
+        LeaseContractDAO leaseManager = new LeaseContractDAO(dataSource);
+        SalesContractDAO saleManager = new SalesContractDAO(dataSource);
+
 
         System.out.println("Welcome to Clancy and Andi's Car Dealership App!");
-        VehiclesDAO.getAllVehicles();
         homeScreen();
     }
 
@@ -34,5 +41,12 @@ public class CarDealershipApp {
                 8) Filter Vehicles By Mileage
                 9) Filter Vehicles By Type
                 0) Exit""");
+        userInput = scanner.nextLine();
+
+        switch(userInput) {
+            case "1": VehiclesDAO.getAllVehicles();
+            case "4": UserInterface.processVehiclesByPrice();
+        }
     }
+
 }

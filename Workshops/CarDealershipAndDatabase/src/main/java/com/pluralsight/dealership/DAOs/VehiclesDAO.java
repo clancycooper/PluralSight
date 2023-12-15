@@ -11,38 +11,26 @@ public class VehiclesDAO {
     private static BasicDataSource dataSource;
     private double minPrice, maxPrice;
     private int minMile, maxMile;
-    static String username = System.getenv("MY_SQL_USERNAME");
-    static String password  = System.getenv("MY_SQL_PASSWORD");
 
-    static {
-        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/cardealership");
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
+    public VehiclesDAO(BasicDataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
-    public VehiclesDAO(DataSource dataSource) throws SQLException {
-        this.dataSource = (BasicDataSource) dataSource;
-    }
-
-    VehiclesDAO vehicleManager = new VehiclesDAO(dataSource);
-
-    public static void getAllVehicles() throws SQLException {
+    public static void getAllVehicles() {
         String query = "SELECT * FROM vehicles;";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement prepStatement = conn.prepareStatement(query);
              ResultSet result = prepStatement.executeQuery()) {
 
-            // Processing the result set
             while (result.next()) {
-                // Replace column index with the appropriate ones
                 System.out.println("VIN:       " + result.getInt("VIN"));
                 System.out.println("ID:        " + result.getInt("dealership_id"));
-                System.out.println("Price:    " + result.getDouble("price"));
-                System.out.println("Make:    " + result.getString("make"));
-                System.out.println("Model:    " + result.getString("model"));
-                System.out.println("Color:    " + result.getString("color"));
-                System.out.println("Sold:    " + result.getBoolean("sold"));
+                System.out.println("Price:     " + result.getDouble("price"));
+                System.out.println("Make:      " + result.getString("make"));
+                System.out.println("Model:     " + result.getString("model"));
+                System.out.println("Color:     " + result.getString("color"));
+                System.out.println("Sold:      " + result.getBoolean("sold"));
                 System.out.println(" -------- ");
             }
 
@@ -52,37 +40,62 @@ public class VehiclesDAO {
         }
     }
 
-    public static List<Vehicle> getVehiclesByPrice(double minPrice, double maxPrice) {
-    return null;
+    public static void getVehiclesByPrice(double minPrice, double maxPrice) {
+        String query = "SELECT d.name, v.make, v.model, v.color, v.year, v.price " +
+                "FROM vehicles v " +
+                "JOIN dealerships d " +
+                "ON v.dealership_id = d.dealership_id " +
+                "WHERE v.price BETWEEN ? AND ? " +
+                "ORDER BY v.price";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement prepStatement = conn.prepareStatement(query)) {
+
+            prepStatement.setDouble(1, minPrice);
+            prepStatement.setDouble(2, maxPrice);
+            ResultSet result = prepStatement.executeQuery();
+
+            while (result.next()) {
+                System.out.println("Dealership:  " + result.getString("name"));
+                System.out.println("Make:        " + result.getString("make"));
+                System.out.println("Model:       " + result.getString("model"));
+                System.out.println("Color:       " + result.getString("color"));
+                System.out.println("Year:        " + result.getInt("year"));
+                System.out.println("Price:       " + result.getDouble("price"));
+                System.out.println(" -------- ");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static List<Vehicle> getVehiclesByMakeModel(String make, String model) {
-        return null;
+    public static void getVehiclesByMakeModel(String make, String model) {
+
     }
 
-    public static List<Vehicle> getVehiclesByYear(String startYear, String endYear) {
-        return null;
+    public static void getVehiclesByYear(String startYear, String endYear) {
+
     }
 
-    public static List<Vehicle> getVehiclesByColor(String color) {
-        return null;
+    public static void getVehiclesByColor(String color) {
+
     }
 
-    public static List<Vehicle> getVehiclesByType(String startYear, String endYear) {
+    public static void getVehiclesByType(String startYear, String endYear) {
         // Reminder to put Type into SQL DB
-        return null;
+
     }
 
-    public static List<Vehicle> getVehiclesByMileage(String minMile, String maxMile) {
-        return null;
+    public static void getVehiclesByMileage(String minMile, String maxMile) {
+
     }
 
-    public List<Vehicle> insertNewVehicle(double price, int year, String make, String model, String color) {
-        return null;
+    public static void insertNewVehicle(double price, int year, String make, String model, String color) {
+
     }
 
-    public List<Vehicle> removeVehicle() {
-       return null;
+    public static void removeVehicle() {
+
     }
 
     public double getMinPrice() {

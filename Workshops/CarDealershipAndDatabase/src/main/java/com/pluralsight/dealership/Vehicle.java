@@ -6,7 +6,8 @@ public class Vehicle {
     private double price;
     private boolean sold;
 
-    public Vehicle(int year, int odometer, String make, String model, String vehicleType, String color, double price, boolean sold) {
+    public Vehicle(int VIN, int year, int odometer, String make, String model, String vehicleType, String color, double price, boolean sold) {
+        this.VIN = VIN;
         this.year = year;
         this.odometer = odometer;
         this.make = make;
@@ -15,6 +16,14 @@ public class Vehicle {
         this.color = color;
         this.price = price;
         this.sold = sold;
+    }
+
+    public int getVIN() {
+        return VIN;
+    }
+
+    public void setVIN(int VIN) {
+        this.VIN = VIN;
     }
 
     public int getYear() {

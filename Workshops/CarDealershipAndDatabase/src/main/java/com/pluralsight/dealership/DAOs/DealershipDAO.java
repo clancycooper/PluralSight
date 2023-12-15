@@ -3,27 +3,40 @@ package com.pluralsight.dealership.DAOs;
 import org.apache.commons.dbcp2.BasicDataSource;
 import com.pluralsight.dealership.Dealership;
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DealershipDAO {
     private static BasicDataSource dataSource;
-    static String username = System.getenv("MY_SQL_USERNAME");
-    static String password = System.getenv("MY_SQL_PASSWORD");
 
-    static {
-        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/cardealership");
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
+    public DealershipDAO(BasicDataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
-    public DealershipDAO(DataSource dataSource) throws SQLException {
-        this.dataSource = (BasicDataSource) dataSource;
-    }
+    public static void getAllDealerships() {
+            String query = "SELECT * FROM dealerships;";
 
-    DealershipDAO dealershipManager = new DealershipDAO(dataSource);
+            try (Connection conn = dataSource.getConnection();
+                 PreparedStatement prepStatement = conn.prepareStatement(query);
+                 ResultSet result = prepStatement.executeQuery()) {
 
-    public static void getDealership() {
-    }
+                // Processing the result set
+                while (result.next()) {
+                    // Replace column index with the appropriate ones
+                    System.out.println("ID:                 " + result.getInt("dealership_id"));
+                    System.out.println("Dealership Name:    " + result.getString("name"));
+                    System.out.println("Address:            " + result.getString("address"));
+                    System.out.println("Phone:              " + result.getString("phone"));
+                    System.out.println(" -------- ");
+                }
+
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 
     public static void saveDealership(String name, String phone, String address) {
 

@@ -1,5 +1,7 @@
 package com.pluralsight.dealership;
 
+import com.pluralsight.dealership.DAOs.VehiclesDAO;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -7,9 +9,20 @@ import java.util.Scanner;
 public class UserInterface {
     static Scanner scanner = new Scanner(System.in);
 
-    public static void init() throws IOException {
-        //getDealership();
+    public static void processVehiclesByPrice() {
+        System.out.println("Please enter the minimum price for your vehicle search:");
+        double minPrice = scanner.nextDouble();
+        System.out.println("Please enter the maximum price for your vehicle search:");
+        double maxPrice = scanner.nextDouble();
+
+        VehiclesDAO.getVehiclesByPrice(minPrice, maxPrice);
+        CarDealershipApp.homeScreen();
     }
+
+}
+//    public static void init() throws IOException {
+//        //getDealership();
+//    }
 
 //    public static void display() throws IOException {
 //        init();
@@ -101,21 +114,3 @@ public class UserInterface {
 //        }
 //    }
 
-
-    public static void menu() {
-        String welcome = """
-                Welcome to ClancysList, the one stop shop for all things used vehicles.
-                Enter the number of the menu option you wish to view:\s
-                1) View All Vehicles
-                2) Add A Vehicle
-                3) Remove A Vehicle
-                4) Filter Vehicles By Price
-                5) Filter Vehicles By Make/Model
-                6) Filter Vehicles By Year
-                7) Filter Vehicles By Color
-                8) Filter Vehicles By Mileage
-                9) Filter Vehicles By Type
-                0) Exit""";
-        System.out.println(welcome);
-    }
-}
