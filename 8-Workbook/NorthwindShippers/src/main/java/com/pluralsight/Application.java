@@ -13,7 +13,7 @@ public class Application {
 
 
     public static void main(String[] args) {
-        //Connecting to the Northwind Database using args
+        //Connecting to the Northwind Database
         dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/northwind");
         dataSource.setUsername(args[0]);
         dataSource.setPassword(args[1]);
