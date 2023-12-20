@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Properties ###
-9-Workbook/NorthwindTraderSpringBoot/src/main/resources
+9-Workbook/NorthwindTraderSpringBoot/src/main/resources/application.properties
