@@ -31,6 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### Properties ###
-9-Workbook/NorthwindTraderSpringBoot/src/main/resources/application.properties
