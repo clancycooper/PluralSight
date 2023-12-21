@@ -4,10 +4,9 @@ import com.pluralsight.dao.CategoryDAO;
 import com.pluralsight.models.Category;
 import com.pluralsight.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +25,12 @@ public class CategoryController {
         return categories;
     }
 
-    @RequestMapping(path = "/categories/{id}", method = RequestMethod.GET)
-    public Category getCategoriesByID(@PathVariable int id) {
-        Category category = dao.getById(id);
-        return category;
+    @RequestMapping(path="/categories", method=RequestMethod.POST)
+    @ResponseStatus(value= HttpStatus.CREATED)
+    public Category addCategory(
+            @RequestBody Category category
+    ){
+        Category newCategory = dao.insert(category);
+        return newCategory;
     }
 }

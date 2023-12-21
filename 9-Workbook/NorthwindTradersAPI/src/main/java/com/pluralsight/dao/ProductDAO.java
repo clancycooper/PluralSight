@@ -7,4 +7,5 @@ import java.util.List;
 public interface ProductDAO {
     List<Product> getAll();
     Product getById(int id);
+    Product insert(Product product);
 }

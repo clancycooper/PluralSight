@@ -62,4 +62,34 @@ public class JdbcProductDAO implements ProductDAO {
         }
         return null;
     }
+
+    @Override
+    public Product insert(Product product) {
+        String query = "INSERT INTO Products (CategoryID, ProductName, UnitPrice) VALUES (?, ?, ?)";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            prepStatement.setInt(1, product.getCategoryID());
+            prepStatement.setString(2, product.getProductName());
+            prepStatement.setDouble(3, product.getUnitPrice());
+            int rows = prepStatement.executeUpdate();
+
+            if (rows == 0) {
+                throw new SQLException("Insertion failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = prepStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int generatedID = generatedKeys.getInt(1);
+                    product.setProductID(generatedID);
+                    return product;
+                } else {
+                    throw new SQLException("Insertion failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error occurred while inserting product", e);
+        }
+    }
+
 }

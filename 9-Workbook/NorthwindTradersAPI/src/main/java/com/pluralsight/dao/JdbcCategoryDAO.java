@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,5 +59,32 @@ public class JdbcCategoryDAO implements CategoryDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Category insert(Category category) {
+        String query = "INSERT INTO Categories (CategoryName) VALUES (?)";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            prepStatement.setString(1, category.getCategoryName());
+            int rows = prepStatement.executeUpdate();
+
+            if (rows == 0) {
+                throw new SQLException("Insertion failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = prepStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int generatedID = generatedKeys.getInt(1);
+                    category.setCategoryID(generatedID);
+                    return category;
+                } else {
+                    throw new SQLException("Insertion failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error occurred while inserting category.", e);
+        }
     }
 }
