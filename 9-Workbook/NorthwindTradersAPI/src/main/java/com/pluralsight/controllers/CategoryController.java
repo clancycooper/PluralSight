@@ -2,12 +2,9 @@ package com.pluralsight.controllers;
 
 import com.pluralsight.dao.CategoryDAO;
 import com.pluralsight.models.Category;
-import com.pluralsight.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,6 +22,12 @@ public class CategoryController {
         return categories;
     }
 
+    @RequestMapping(path = "/categories/{id}", method = RequestMethod.GET)
+    public Category getCategoryByID(@PathVariable int id) {
+        Category category = dao.getById(id);
+        return category;
+    }
+
     @RequestMapping(path="/categories", method=RequestMethod.POST)
     @ResponseStatus(value= HttpStatus.CREATED)
     public Category addCategory(
@@ -32,5 +35,21 @@ public class CategoryController {
     ){
         Category newCategory = dao.insert(category);
         return newCategory;
+    }
+
+    @RequestMapping(path="/categories/{id}",method=RequestMethod.PUT)
+    public void updateCategory (
+            @PathVariable int id,
+            @RequestBody Category category
+    )
+    {
+        dao.update(id, category);
+    }
+
+    @RequestMapping(path="/categories/{id}",method=RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteCategory (@PathVariable int id)
+    {
+        dao.delete(id);
     }
 }

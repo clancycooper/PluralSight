@@ -5,8 +5,6 @@ import com.pluralsight.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -37,5 +35,21 @@ public class ProductController {
     ){
         Product newProduct = dao.insert(product);
         return newProduct;
+    }
+
+    @RequestMapping(path="/products/{id}",method=RequestMethod.PUT)
+    public void updateProduct (
+            @PathVariable int id,
+            @RequestBody Product product
+    )
+    {
+        dao.update(id, product);
+    }
+
+    @RequestMapping(path="/products/{id}",method=RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteProduct (@PathVariable int id)
+    {
+        dao.delete(id);
     }
 }

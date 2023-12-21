@@ -87,4 +87,48 @@ public class JdbcCategoryDAO implements CategoryDAO {
             throw new RuntimeException("Error occurred while inserting category.", e);
         }
     }
+
+    @Override
+    public void update(int id, Category category) {
+        String query = "UPDATE Categories SET CategoryName = ? WHERE CategoryID = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement prepStatement = conn.prepareStatement(query)) {
+
+            prepStatement.setString(1, category.getCategoryName());
+            prepStatement.setInt(2, id);
+
+            int rows = prepStatement.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Category with ID: " + id + " updated successfully.");
+            } else {
+                System.out.println("No category found with ID: " + id);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error occurred while updating category", e);
+        }
+    }
+
+    @Override
+    public void delete(int id) {
+        String query = "DELETE FROM Categories WHERE CategoryID = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement prepStatement = conn.prepareStatement(query)) {
+            prepStatement.setInt(1, id);
+
+            int rows = prepStatement.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Category with ID: " + id + " deleted successfully.");
+            } else {
+                System.out.println("No category found with ID: " + id);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error occurred while deleting category", e);
+        }
+    }
 }

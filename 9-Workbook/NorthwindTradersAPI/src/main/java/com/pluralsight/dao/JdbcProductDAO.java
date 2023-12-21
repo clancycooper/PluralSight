@@ -92,4 +92,49 @@ public class JdbcProductDAO implements ProductDAO {
         }
     }
 
+    @Override
+    public void update(int id, Product product) {
+        String query = "UPDATE Products SET CategoryID = ?, ProductName = ?, UnitPrice = ? WHERE ProductID = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement prepStatement = conn.prepareStatement(query)) {
+
+            prepStatement.setInt(1, product.getCategoryID());
+            prepStatement.setString(2, product.getProductName());
+            prepStatement.setDouble(3, product.getUnitPrice());
+            prepStatement.setInt(4, id);
+
+            int rows = prepStatement.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Product with ID: " + id + " updated successfully.");
+            } else {
+                System.out.println("No product found with ID: " + id);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error occurred while updating product", e);
+        }
+    }
+
+    @Override
+    public void delete(int id) {
+        String query = "DELETE FROM Products WHERE ProductID = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement prepStatement = conn.prepareStatement(query)) {
+            prepStatement.setInt(1, id);
+
+            int rows = prepStatement.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Product with ID: " + id + " deleted successfully.");
+            } else {
+                System.out.println("No product found with ID: " + id);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error occurred while deleting product", e);
+        }
+    }
 }
