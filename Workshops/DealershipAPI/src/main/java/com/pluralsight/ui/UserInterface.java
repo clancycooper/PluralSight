@@ -1,7 +1,6 @@
 package com.pluralsight.ui;
 
-import com.pluralsight.MainApp;
-import com.pluralsight.dao.VehiclesDAO;
+import com.pluralsight.dao.JdbcVehiclesDAO;
 
 import java.util.Scanner;
 
@@ -14,7 +13,7 @@ public class UserInterface {
         System.out.println("Please enter the maximum price for your vehicle search:");
         double maxPrice = scanner.nextDouble();
 
-        VehiclesDAO.getVehiclesByPrice(minPrice, maxPrice);
+        JdbcVehiclesDAO.getVehiclesByPrice(minPrice, maxPrice);
         //MainApp.homeScreen();
     }
 

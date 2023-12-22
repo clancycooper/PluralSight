@@ -1,13 +1,13 @@
 package com.pluralsight.dao;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import com.pluralsight.models.SalesContract;
+
 import javax.sql.DataSource;
 
-public class SalesContractDAO {
+public class JdbcSalesContractDAO {
     private DataSource dataSource;
 
-    public SalesContractDAO(BasicDataSource dataSource) {
+    public JdbcSalesContractDAO(BasicDataSource dataSource) {
         this.dataSource = dataSource;
     }
 

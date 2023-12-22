@@ -1,17 +1,16 @@
 package com.pluralsight.dao;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import com.pluralsight.models.Dealership;
-import javax.sql.DataSource;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DealershipDAO {
+public class JdbcDealershipDAO {
     private static BasicDataSource dataSource;
 
-    public DealershipDAO(BasicDataSource dataSource) {
+    public JdbcDealershipDAO(BasicDataSource dataSource) {
         this.dataSource = dataSource;
     }
 

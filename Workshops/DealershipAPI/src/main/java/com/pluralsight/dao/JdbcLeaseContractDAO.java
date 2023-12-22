@@ -1,13 +1,11 @@
 package com.pluralsight.dao;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import com.pluralsight.models.LeaseContract;
-import javax.sql.DataSource;
 
-public class LeaseContractDAO {
+public class JdbcLeaseContractDAO {
     private static BasicDataSource dataSource;
 
-    public LeaseContractDAO(BasicDataSource dataSource) {
+    public JdbcLeaseContractDAO(BasicDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
