@@ -1,19 +1,26 @@
 package com.pluralsight.dao;
 
-import org.apache.commons.dbcp2.BasicDataSource;
+import com.pluralsight.models.Vehicle;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class JdbcVehiclesDAO {
-    private static BasicDataSource dataSource;
-    private double minPrice, maxPrice;
-    private int minMile, maxMile;
+@Component
+public class JdbcVehiclesDAO implements VehiclesDAO {
+    private DataSource dataSource;
 
-    public JdbcVehiclesDAO(BasicDataSource dataSource) {
+    @Autowired
+    public JdbcVehiclesDAO(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public static void getAllVehicles() {
+    @Override
+    public List<Vehicle> getAll() {
+        List<Vehicle> allVehicles = new ArrayList<>();
         String query = "SELECT * FROM vehicles;";
 
         try (Connection conn = dataSource.getConnection();
@@ -21,50 +28,93 @@ public class JdbcVehiclesDAO {
              ResultSet result = prepStatement.executeQuery()) {
 
             while (result.next()) {
-                System.out.println("VIN:       " + result.getInt("VIN"));
-                System.out.println("ID:        " + result.getInt("dealership_id"));
-                System.out.println("Price:     " + result.getDouble("price"));
-                System.out.println("Make:      " + result.getString("make"));
-                System.out.println("Model:     " + result.getString("model"));
-                System.out.println("Color:     " + result.getString("color"));
-                System.out.println("Sold:      " + result.getBoolean("sold"));
-                System.out.println(" -------- ");
+                int VIN = result.getInt("VIN");
+                int dealershipID = result.getInt("dealership_id");
+                int saleID = result.getInt("sale_id");
+                int leaseID = result.getInt("lease_id");
+                double price = result.getDouble("price");
+                int odometer = result.getInt("odometer");
+                String make = result.getString("make");
+                String model = result.getString("model");
+                String vehicleType = result.getString("type");
+                int year = result.getInt("year");
+                String color = result.getString("color");
+                boolean sold = result.getBoolean("sold");
+                Vehicle vehicle = new Vehicle(VIN, year, odometer, make, model, vehicleType, color, price, sold);
+                allVehicles.add(vehicle);
             }
 
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
+        return allVehicles;
     }
 
-    public static void getVehiclesByPrice(double minPrice, double maxPrice) {
-        String query = "SELECT d.name, v.make, v.model, v.color, v.year, v.price " +
-                "FROM vehicles v " +
-                "JOIN dealerships d " +
-                "ON v.dealership_id = d.dealership_id " +
-                "WHERE v.price BETWEEN ? AND ? " +
-                "ORDER BY v.price";
+    @Override
+    public List<Vehicle> getByMinPrice(double minPrice) {
+        List<Vehicle> lowestPrice = new ArrayList<>();
+        String query = "SELECT VIN, dealership_id, price, make, model, color, year, odometer, sold, type " +
+                "FROM vehicles " +
+                "WHERE price <= ? " +
+                "ORDER BY price";
 
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement prepStatement = conn.prepareStatement(query)) {
-
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(query)) {
             prepStatement.setDouble(1, minPrice);
-            prepStatement.setDouble(2, maxPrice);
-            ResultSet result = prepStatement.executeQuery();
 
-            while (result.next()) {
-                System.out.println("Dealership:  " + result.getString("name"));
-                System.out.println("Make:        " + result.getString("make"));
-                System.out.println("Model:       " + result.getString("model"));
-                System.out.println("Color:       " + result.getString("color"));
-                System.out.println("Year:        " + result.getInt("year"));
-                System.out.println("Price:       " + result.getDouble("price"));
-                System.out.println(" -------- ");
+            try (ResultSet result = prepStatement.executeQuery()) {
+                while (result.next()) {
+                    int VIN = result.getInt("VIN");
+                    int dealershipID = result.getInt("dealership_id");
+                    double price = result.getDouble("price");
+                    int odometer = result.getInt("odometer");
+                    String make = result.getString("make");
+                    String model = result.getString("model");
+                    String color = result.getString("color");
+                    int year = result.getInt("year");
+                    String vehicleType = result.getString("type");
+                    boolean sold = result.getBoolean("sold");
+                    Vehicle vehicle = new Vehicle(VIN, year, odometer, make, model, vehicleType, color, price, sold);
+                    lowestPrice.add(vehicle);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return lowestPrice;
     }
+
+
+
+//    public static void getVehiclesByPrice(double minPrice, double maxPrice) {
+//        String query = "SELECT d.name, v.make, v.model, v.color, v.year, v.price " +
+//                "FROM vehicles v " +
+//                "JOIN dealerships d " +
+//                "ON v.dealership_id = d.dealership_id " +
+//                "WHERE v.price BETWEEN ? AND ? " +
+//                "ORDER BY v.price";
+//
+//        try (Connection conn = dataSource.getConnection();
+//             PreparedStatement prepStatement = conn.prepareStatement(query)) {
+//
+//            prepStatement.setDouble(1, minPrice);
+//            prepStatement.setDouble(2, maxPrice);
+//            ResultSet result = prepStatement.executeQuery();
+//
+//            while (result.next()) {
+//                System.out.println("Dealership:  " + result.getString("name"));
+//                System.out.println("Make:        " + result.getString("make"));
+//                System.out.println("Model:       " + result.getString("model"));
+//                System.out.println("Color:       " + result.getString("color"));
+//                System.out.println("Year:        " + result.getInt("year"));
+//                System.out.println("Price:       " + result.getDouble("price"));
+//                System.out.println(" -------- ");
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public static void getVehiclesByMakeModel(String make, String model) {
 
@@ -95,43 +145,63 @@ public class JdbcVehiclesDAO {
 
     }
 
-    public double getMinPrice() {
-        return minPrice;
+    @Override
+    public Vehicle getByMaxPrice(int id) {
+        return null;
     }
 
-    public void setMinPrice(double minPrice) {
-        this.minPrice = minPrice;
+    @Override
+    public Vehicle getByMake(int id) {
+        return null;
     }
 
-    public double getMaxPrice() {
-        return maxPrice;
+    @Override
+    public Vehicle getByModel(int id) {
+        return null;
     }
 
-    public void setMaxPrice(double maxPrice) {
-        this.maxPrice = maxPrice;
+    @Override
+    public Vehicle getByMinYear(int id) {
+        return null;
     }
 
-    public static BasicDataSource getDataSource() {
-        return dataSource;
+    @Override
+    public Vehicle getByMaxYear(int id) {
+        return null;
     }
 
-    public static void setDataSource(BasicDataSource dataSource) {
-        JdbcVehiclesDAO.dataSource = dataSource;
+    @Override
+    public Vehicle getByColor(int id) {
+        return null;
     }
 
-    public int getMinMile() {
-        return minMile;
+    @Override
+    public Vehicle getByType(int id) {
+        return null;
     }
 
-    public void setMinMile(int minMile) {
-        this.minMile = minMile;
+    @Override
+    public Vehicle getByMinMile(int id) {
+        return null;
     }
 
-    public int getMaxMile() {
-        return maxMile;
+    @Override
+    public Vehicle getByMaxMile(int id) {
+        return null;
     }
 
-    public void setMaxMile(int maxMile) {
-        this.maxMile = maxMile;
+    @Override
+    public Vehicle insert(Vehicle vehicle) {
+        return null;
+    }
+
+    @Override
+    public void update(int id, Vehicle vehicle) {
+
+    }
+
+    @Override
+    public void delete(int id) {
+
     }
 }

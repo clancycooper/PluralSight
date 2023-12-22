@@ -6,10 +6,12 @@ import java.util.List;
 
 public interface VehiclesDAO {
     List<Vehicle> getAll();
-    Vehicle getByMinPrice(int id);
+    List<Vehicle> getByMinPrice(double minPrice);
     Vehicle getByMaxPrice(int id);
-    Vehicle getByMakeModel(int id);
-    Vehicle getByYear(int id);
+    Vehicle getByMake(int id);
+    Vehicle getByModel(int id);
+    Vehicle getByMinYear(int id);
+    Vehicle getByMaxYear(int id);
     Vehicle getByColor(int id);
     Vehicle getByType(int id);
     Vehicle getByMinMile(int id);

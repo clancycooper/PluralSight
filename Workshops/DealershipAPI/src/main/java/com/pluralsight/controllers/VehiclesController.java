@@ -17,7 +17,14 @@ public class VehiclesController {
 
     @RequestMapping(path = "/vehicles", method = RequestMethod.GET)
     public List<Vehicle> getAllVehicles() {
-        void vehicles = jdbcVehiclesDAO.getAllVehicles();
+        var vehicles = jdbcVehiclesDAO.getAll();
         return vehicles;
     }
+
+    @RequestMapping(path = "/vehicles/{minPrice}", method = RequestMethod.GET)
+    public List<Vehicle> getMinPrice(@PathVariable double minPrice) {
+        var vehicles = jdbcVehiclesDAO.getByMinPrice(minPrice);
+        return vehicles;
+    }
+
 }

@@ -13,7 +13,7 @@ public class UserInterface {
         System.out.println("Please enter the maximum price for your vehicle search:");
         double maxPrice = scanner.nextDouble();
 
-        JdbcVehiclesDAO.getVehiclesByPrice(minPrice, maxPrice);
+        //JdbcVehiclesDAO.getVehiclesByPrice(minPrice, maxPrice);
         //MainApp.homeScreen();
     }
 

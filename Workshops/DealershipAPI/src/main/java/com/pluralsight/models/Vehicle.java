@@ -1,7 +1,7 @@
 package com.pluralsight.models;
 
 public class Vehicle {
-    private int VIN, dealershipID, year, odometer, saleID, leaseID;
+    private int VIN, dealershipID, year, odometer;
     private String make, model, vehicleType, color;
     private double price;
     private boolean sold;
@@ -89,4 +89,13 @@ public class Vehicle {
     public void setSold(boolean sold) {
         this.sold = sold;
     }
+
+    public int getDealershipID() {
+        return dealershipID;
+    }
+
+    public void setDealershipID(int dealershipID) {
+        this.dealershipID = dealershipID;
+    }
+
 }
