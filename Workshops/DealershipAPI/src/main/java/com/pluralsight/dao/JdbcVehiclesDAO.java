@@ -29,9 +29,6 @@ public class JdbcVehiclesDAO implements VehiclesDAO {
 
             while (result.next()) {
                 int VIN = result.getInt("VIN");
-                int dealershipID = result.getInt("dealership_id");
-                int saleID = result.getInt("sale_id");
-                int leaseID = result.getInt("lease_id");
                 double price = result.getDouble("price");
                 int odometer = result.getInt("odometer");
                 String make = result.getString("make");
@@ -66,7 +63,6 @@ public class JdbcVehiclesDAO implements VehiclesDAO {
             try (ResultSet result = prepStatement.executeQuery()) {
                 while (result.next()) {
                     int VIN = result.getInt("VIN");
-                    int dealershipID = result.getInt("dealership_id");
                     double price = result.getDouble("price");
                     int odometer = result.getInt("odometer");
                     String make = result.getString("make");
@@ -83,6 +79,105 @@ public class JdbcVehiclesDAO implements VehiclesDAO {
             e.printStackTrace();
         }
         return lowestPrice;
+    }
+
+    @Override
+    public List<Vehicle> getByMaxPrice(double maxPrice) {
+        List<Vehicle> highestPrice = new ArrayList<>();
+        String query = "SELECT VIN, dealership_id, price, make, model, color, year, odometer, sold, type " +
+                "FROM vehicles " +
+                "WHERE price >= ? " +
+                "ORDER BY price";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(query)) {
+            prepStatement.setDouble(1, maxPrice);
+
+            try (ResultSet result = prepStatement.executeQuery()) {
+                while (result.next()) {
+                    int VIN = result.getInt("VIN");
+                    double price = result.getDouble("price");
+                    int odometer = result.getInt("odometer");
+                    String make = result.getString("make");
+                    String model = result.getString("model");
+                    String color = result.getString("color");
+                    int year = result.getInt("year");
+                    String vehicleType = result.getString("type");
+                    boolean sold = result.getBoolean("sold");
+                    Vehicle vehicle = new Vehicle(VIN, year, odometer, make, model, vehicleType, color, price, sold);
+                    highestPrice.add(vehicle);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return highestPrice;
+    }
+
+    @Override
+    public List<Vehicle> getByMake(String makeID) {
+            List<Vehicle> byMake = new ArrayList<>();
+            String query = "SELECT VIN, dealership_id, price, make, model, color, year, odometer, sold, type " +
+                    "FROM vehicles " +
+                    "WHERE make = ? " +
+                    "ORDER BY price";
+
+            try (Connection connection = dataSource.getConnection();
+                 PreparedStatement prepStatement = connection.prepareStatement(query)) {
+                prepStatement.setString(1, makeID);
+
+                try (ResultSet result = prepStatement.executeQuery()) {
+                    while (result.next()) {
+                        int VIN = result.getInt("VIN");
+                        double price = result.getDouble("price");
+                        int odometer = result.getInt("odometer");
+                        String make = result.getString("make");
+                        String model = result.getString("model");
+                        String color = result.getString("color");
+                        int year = result.getInt("year");
+                        String vehicleType = result.getString("type");
+                        boolean sold = result.getBoolean("sold");
+                        Vehicle vehicle = new Vehicle(VIN, year, odometer, make, model, vehicleType, color, price, sold);
+                        byMake.add(vehicle);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return byMake;
+    }
+
+    @Override
+    public List<Vehicle> getByModel(String modelID) {
+            List<Vehicle> byModel = new ArrayList<>();
+            String query = "SELECT VIN, dealership_id, price, make, model, color, year, odometer, sold, type " +
+                    "FROM vehicles " +
+                    "WHERE model = ? " +
+                    "ORDER BY price";
+
+            try (Connection connection = dataSource.getConnection();
+                 PreparedStatement prepStatement = connection.prepareStatement(query)) {
+                prepStatement.setString(1, modelID);
+
+                try (ResultSet result = prepStatement.executeQuery()) {
+                    while (result.next()) {
+                        int VIN = result.getInt("VIN");
+                        double price = result.getDouble("price");
+                        int odometer = result.getInt("odometer");
+                        String make = result.getString("make");
+                        String model = result.getString("model");
+                        String color = result.getString("color");
+                        int year = result.getInt("year");
+                        String vehicleType = result.getString("type");
+                        boolean sold = result.getBoolean("sold");
+                        Vehicle vehicle = new Vehicle(VIN, year, odometer, make, model, vehicleType, color, price, sold);
+                        byModel.add(vehicle);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return byModel;
     }
 
 
@@ -143,21 +238,6 @@ public class JdbcVehiclesDAO implements VehiclesDAO {
 
     public static void removeVehicle() {
 
-    }
-
-    @Override
-    public Vehicle getByMaxPrice(int id) {
-        return null;
-    }
-
-    @Override
-    public Vehicle getByMake(int id) {
-        return null;
-    }
-
-    @Override
-    public Vehicle getByModel(int id) {
-        return null;
     }
 
     @Override
