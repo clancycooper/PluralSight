@@ -2,29 +2,14 @@ package com.pluralsight.models;
 
 public class LeaseContract {
 
-    // leaseID (int) (PK A_I)
-    // VIN (int)
-    // dealershipID (int)
-    // firstName (String)
-    // lastName (String)
-    // address (String)
-    // amountPaid (double)
-    // amountDue(double)
-    // startDate (String)
-    // endDate(String)
-    //Methods
-    //-saveLease (Insert)
-    //-updateLease (time permitting, update)
-
     private int leaseID, VIN, dealershipID;
     private String firstName, lastName, address, startDate, endDate;
     private double amountPaid, amountDue;
 
-    //public class LeaseContract extends Contract {
-    //protected double expectedEndingValue = 0.5;
-    //protected double leaseFee = 0.07;
-
-    public LeaseContract(String firstName, String lastName, String address, String startDate, String endDate, double amountPaid, double amountDue) {
+    public LeaseContract(int leaseID, int vin, int dealershipID, String firstName, String lastName, String address, String startDate, String endDate, double amountPaid, double amountDue) {
+        this.leaseID = leaseID;
+        this.VIN = vin;
+        this.dealershipID = dealershipID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -34,7 +19,29 @@ public class LeaseContract {
         this.amountDue = amountDue;
     }
 
+    public int getLeaseID() {
+        return leaseID;
+    }
 
+    public void setLeaseID(int leaseID) {
+        this.leaseID = leaseID;
+    }
+
+    public int getVIN() {
+        return VIN;
+    }
+
+    public void setVIN(int VIN) {
+        this.VIN = VIN;
+    }
+
+    public int getDealershipID() {
+        return dealershipID;
+    }
+
+    public void setDealershipID(int dealershipID) {
+        this.dealershipID = dealershipID;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -91,34 +98,4 @@ public class LeaseContract {
     public void setAmountDue(double amountDue) {
         this.amountDue = amountDue;
     }
-
-    //    public LeaseContract(String date, String customerName, String customerEmail, String vehicleSold,) {
-//        super(date, customerName, customerEmail, vehicleSold);
-//        this.expectedEndingValue = expectedEndingValue;
-//        this.leaseFee = leaseFee;
-//    }
-
-//    public double getExpectedEndingValue() {
-//        expectedEndingValue = getPrice() * expectedEndingValue;
-//        return expectedEndingValue;
-//    }
-//
-//    public double getLeaseFee() {
-//        return leaseFee;
-//    }
-//
-//    @Override
-//    public double getTotalPrice() {
-//        double totalPrice = getPrice() + expectedEndingValue + leaseFee;
-//        return totalPrice;
-//    }
-//
-//    @Override
-//    public double getMonthlyPayment() {
-//        double monthly = getTotalPrice() / 36;
-//        double interest = (getTotalPrice() / 4.0) / 100;
-//        double monthlyLeasePayment = monthly + interest;
-//        return monthlyLeasePayment;
-//
-//    }
 }
