@@ -376,12 +376,39 @@ public class JdbcVehiclesDAO implements VehiclesDAO {
         }
         return byType;
     }
-    
 
     @Override
     public Vehicle insert(Vehicle vehicle) {
-        return null;
+        String query = "INSERT INTO vehicles (VIN, year, odometer, make, model, type, color, price, sold) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement prepStatement = connection.prepareStatement(query)) {
+            prepStatement.setInt(1, vehicle.getVIN());
+            prepStatement.setInt(2, vehicle.getYear());
+            prepStatement.setInt(3, vehicle.getOdometer());
+            prepStatement.setString(4, vehicle.getMake());
+            prepStatement.setString(5, vehicle.getModel());
+            prepStatement.setString(6, vehicle.getVehicleType());
+            prepStatement.setString(7, vehicle.getColor());
+            prepStatement.setDouble(8, vehicle.getPrice());
+            prepStatement.setBoolean(9, vehicle.isSold());
+            int rows = prepStatement.executeUpdate();
+
+            if (rows == 0) {
+                throw new SQLException("Insertion failed, no rows affected.");
+            }
+
+            return vehicle;
+
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 1062) {
+                throw new RuntimeException("Error: VIN must be unique.", e);
+            } else {
+                throw new RuntimeException("Error occurred while inserting vehicle", e);
+            }
+        }
     }
+    
 
     @Override
     public void update(int id, Vehicle vehicle) {

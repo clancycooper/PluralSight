@@ -3,6 +3,7 @@ package com.pluralsight.controllers;
 import com.pluralsight.dao.JdbcVehiclesDAO;
 import com.pluralsight.models.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -80,4 +81,14 @@ public class VehiclesController {
         var vehicles = jdbcVehiclesDAO.getByType(type);
         return vehicles;
     }
+
+    @RequestMapping(path="/vehicles/add", method=RequestMethod.POST)
+    @ResponseStatus(value= HttpStatus.CREATED)
+    public Vehicle addVehicle(
+            @RequestBody Vehicle vehicle
+    ){
+        Vehicle newVehicle = jdbcVehiclesDAO.insert(vehicle);
+        return newVehicle;
+    }
+
 }
