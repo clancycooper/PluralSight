@@ -180,95 +180,203 @@ public class JdbcVehiclesDAO implements VehiclesDAO {
             return byModel;
     }
 
+    @Override
+    public List<Vehicle> getByMinYear(int minYear) {
+        List<Vehicle> lowestYear = new ArrayList<>();
+        String query = "SELECT VIN, dealership_id, price, make, model, color, year, odometer, sold, type " +
+                "FROM vehicles " +
+                "WHERE year <= ? " +
+                "ORDER BY year";
 
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(query)) {
+            prepStatement.setInt(1, minYear);
 
-//    public static void getVehiclesByPrice(double minPrice, double maxPrice) {
-//        String query = "SELECT d.name, v.make, v.model, v.color, v.year, v.price " +
-//                "FROM vehicles v " +
-//                "JOIN dealerships d " +
-//                "ON v.dealership_id = d.dealership_id " +
-//                "WHERE v.price BETWEEN ? AND ? " +
-//                "ORDER BY v.price";
-//
-//        try (Connection conn = dataSource.getConnection();
-//             PreparedStatement prepStatement = conn.prepareStatement(query)) {
-//
-//            prepStatement.setDouble(1, minPrice);
-//            prepStatement.setDouble(2, maxPrice);
-//            ResultSet result = prepStatement.executeQuery();
-//
-//            while (result.next()) {
-//                System.out.println("Dealership:  " + result.getString("name"));
-//                System.out.println("Make:        " + result.getString("make"));
-//                System.out.println("Model:       " + result.getString("model"));
-//                System.out.println("Color:       " + result.getString("color"));
-//                System.out.println("Year:        " + result.getInt("year"));
-//                System.out.println("Price:       " + result.getDouble("price"));
-//                System.out.println(" -------- ");
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    public static void getVehiclesByMakeModel(String make, String model) {
-
-    }
-
-    public static void getVehiclesByYear(String startYear, String endYear) {
-
-    }
-
-    public static void getVehiclesByColor(String color) {
-
-    }
-
-    public static void getVehiclesByType(String startYear, String endYear) {
-        // Reminder to put Type into SQL DB
-
-    }
-
-    public static void getVehiclesByMileage(String minMile, String maxMile) {
-
-    }
-
-    public static void insertNewVehicle(double price, int year, String make, String model, String color) {
-
-    }
-
-    public static void removeVehicle() {
-
+            try (ResultSet result = prepStatement.executeQuery()) {
+                while (result.next()) {
+                    int VIN = result.getInt("VIN");
+                    double price = result.getDouble("price");
+                    int odometer = result.getInt("odometer");
+                    String make = result.getString("make");
+                    String model = result.getString("model");
+                    String color = result.getString("color");
+                    int year = result.getInt("year");
+                    String vehicleType = result.getString("type");
+                    boolean sold = result.getBoolean("sold");
+                    Vehicle vehicle = new Vehicle(VIN, year, odometer, make, model, vehicleType, color, price, sold);
+                    lowestYear.add(vehicle);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lowestYear;
     }
 
     @Override
-    public Vehicle getByMinYear(int id) {
-        return null;
+    public List<Vehicle> getByMaxYear(int maxYear) {
+        List<Vehicle> highestYear = new ArrayList<>();
+        String query = "SELECT VIN, dealership_id, price, make, model, color, year, odometer, sold, type " +
+                "FROM vehicles " +
+                "WHERE year >= ? " +
+                "ORDER BY year";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(query)) {
+            prepStatement.setInt(1, maxYear);
+
+            try (ResultSet result = prepStatement.executeQuery()) {
+                while (result.next()) {
+                    int VIN = result.getInt("VIN");
+                    double price = result.getDouble("price");
+                    int odometer = result.getInt("odometer");
+                    String make = result.getString("make");
+                    String model = result.getString("model");
+                    String color = result.getString("color");
+                    int year = result.getInt("year");
+                    String vehicleType = result.getString("type");
+                    boolean sold = result.getBoolean("sold");
+                    Vehicle vehicle = new Vehicle(VIN, year, odometer, make, model, vehicleType, color, price, sold);
+                    highestYear.add(vehicle);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return highestYear;
     }
 
     @Override
-    public Vehicle getByMaxYear(int id) {
-        return null;
+    public List<Vehicle> getByColor(String color) {
+        List<Vehicle> byColor = new ArrayList<>();
+        String query = "SELECT VIN, dealership_id, price, make, model, color, year, odometer, sold, type " +
+                "FROM vehicles " +
+                "WHERE color = ? " +
+                "ORDER BY dealership_id";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(query)) {
+            prepStatement.setString(1, color);
+
+            try (ResultSet result = prepStatement.executeQuery()) {
+                while (result.next()) {
+                    int VIN = result.getInt("VIN");
+                    double price = result.getDouble("price");
+                    int odometer = result.getInt("odometer");
+                    String make = result.getString("make");
+                    String model = result.getString("model");
+                    int year = result.getInt("year");
+                    String vehicleType = result.getString("type");
+                    boolean sold = result.getBoolean("sold");
+                    Vehicle vehicle = new Vehicle(VIN, year, odometer, make, model, vehicleType, color, price, sold);
+                    byColor.add(vehicle);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return byColor;
     }
 
     @Override
-    public Vehicle getByColor(int id) {
-        return null;
+    public List<Vehicle> getByMinMile(int minMile) {
+        List<Vehicle> lowestMile = new ArrayList<>();
+        String query = "SELECT VIN, dealership_id, price, make, model, color, year, odometer, sold, type " +
+                "FROM vehicles " +
+                "WHERE odometer <= ? " +
+                "ORDER BY odometer";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(query)) {
+            prepStatement.setInt(1, minMile);
+
+            try (ResultSet result = prepStatement.executeQuery()) {
+                while (result.next()) {
+                    int VIN = result.getInt("VIN");
+                    double price = result.getDouble("price");
+                    int odometer = result.getInt("odometer");
+                    String make = result.getString("make");
+                    String model = result.getString("model");
+                    String color = result.getString("color");
+                    int year = result.getInt("year");
+                    String vehicleType = result.getString("type");
+                    boolean sold = result.getBoolean("sold");
+                    Vehicle vehicle = new Vehicle(VIN, year, odometer, make, model, vehicleType, color, price, sold);
+                    lowestMile.add(vehicle);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lowestMile;
     }
 
     @Override
-    public Vehicle getByType(int id) {
-        return null;
+    public List<Vehicle> getByMaxMile(int maxMile) {
+        List<Vehicle> highestMile = new ArrayList<>();
+        String query = "SELECT VIN, dealership_id, price, make, model, color, year, odometer, sold, type " +
+                "FROM vehicles " +
+                "WHERE odometer >= ? " +
+                "ORDER BY odometer";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(query)) {
+            prepStatement.setInt(1, maxMile);
+
+            try (ResultSet result = prepStatement.executeQuery()) {
+                while (result.next()) {
+                    int VIN = result.getInt("VIN");
+                    double price = result.getDouble("price");
+                    int odometer = result.getInt("odometer");
+                    String make = result.getString("make");
+                    String model = result.getString("model");
+                    String color = result.getString("color");
+                    int year = result.getInt("year");
+                    String vehicleType = result.getString("type");
+                    boolean sold = result.getBoolean("sold");
+                    Vehicle vehicle = new Vehicle(VIN, year, odometer, make, model, vehicleType, color, price, sold);
+                    highestMile.add(vehicle);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return highestMile;
     }
 
     @Override
-    public Vehicle getByMinMile(int id) {
-        return null;
-    }
+    public List<Vehicle> getByType(String type) {
+        List<Vehicle> byType = new ArrayList<>();
+        String query = "SELECT VIN, dealership_id, price, make, model, color, year, odometer, sold, type " +
+                "FROM vehicles " +
+                "WHERE type = ? " +
+                "ORDER BY VIN";
 
-    @Override
-    public Vehicle getByMaxMile(int id) {
-        return null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(query)) {
+            prepStatement.setString(1, type);
+
+            try (ResultSet result = prepStatement.executeQuery()) {
+                while (result.next()) {
+                    int VIN = result.getInt("VIN");
+                    double price = result.getDouble("price");
+                    int odometer = result.getInt("odometer");
+                    String make = result.getString("make");
+                    String model = result.getString("model");
+                    String color = result.getString("color");
+                    int year = result.getInt("year");
+                    String vehicleType = result.getString("type");
+                    boolean sold = result.getBoolean("sold");
+                    Vehicle vehicle = new Vehicle(VIN, year, odometer, make, model, vehicleType, color, price, sold);
+                    byType.add(vehicle);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return byType;
     }
+    
 
     @Override
     public Vehicle insert(Vehicle vehicle) {

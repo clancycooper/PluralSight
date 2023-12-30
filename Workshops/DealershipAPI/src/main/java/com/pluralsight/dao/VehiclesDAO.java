@@ -10,12 +10,12 @@ public interface VehiclesDAO {
     List<Vehicle> getByMaxPrice(double maxPrice);
     List<Vehicle> getByMake(String makeID);
     List<Vehicle> getByModel(String modelID);
-    Vehicle getByMinYear(int id);
-    Vehicle getByMaxYear(int id);
-    Vehicle getByColor(int id);
-    Vehicle getByType(int id);
-    Vehicle getByMinMile(int id);
-    Vehicle getByMaxMile(int id);
+    List<Vehicle> getByMinYear(int minYear);
+    List<Vehicle> getByMaxYear(int maxYear);
+    List<Vehicle> getByColor(String color);
+    List<Vehicle> getByMinMile(int minMile);
+    List<Vehicle> getByMaxMile(int maxMile);
+    List<Vehicle> getByType(String type);
     Vehicle insert(Vehicle vehicle);
     void update(int id, Vehicle vehicle);
     void delete(int id);
