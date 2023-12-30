@@ -17,6 +17,6 @@ public interface VehiclesDAO {
     List<Vehicle> getByMaxMile(int maxMile);
     List<Vehicle> getByType(String type);
     Vehicle insert(Vehicle vehicle);
-    void update(int id, Vehicle vehicle);
-    void delete(int id);
+    void update(int vin, Vehicle vehicle);
+    void delete(int vin);
 }

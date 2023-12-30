@@ -396,6 +396,8 @@ public class JdbcVehiclesDAO implements VehiclesDAO {
 
             if (rows == 0) {
                 throw new SQLException("Insertion failed, no rows affected.");
+            } else {
+                System.out.println("New Vehicle has been successfully added!");
             }
 
             return vehicle;
@@ -408,15 +410,38 @@ public class JdbcVehiclesDAO implements VehiclesDAO {
             }
         }
     }
-    
+
 
     @Override
-    public void update(int id, Vehicle vehicle) {
+    public void update(int vin, Vehicle vehicle) {
+        String query = "UPDATE vehicles SET odometer = ?, make = ?, model = ?, type = ?, color = ?, price = ?, sold = ?, dealership_id = ? WHERE VIN = ?";
 
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement prepStatement = conn.prepareStatement(query)) {
+            prepStatement.setInt(1, vehicle.getOdometer());
+            prepStatement.setString(2, vehicle.getMake());
+            prepStatement.setString(3, vehicle.getModel());
+            prepStatement.setString(4, vehicle.getVehicleType());
+            prepStatement.setString(5, vehicle.getColor());
+            prepStatement.setDouble(6, vehicle.getPrice());
+            prepStatement.setBoolean(7, vehicle.isSold());
+            prepStatement.setInt(8, vehicle.getDealershipID());
+            prepStatement.setInt(9, vin);
+
+            int rows = prepStatement.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Vehicle with VIN: " + vin + " updated successfully.");
+            } else {
+                System.out.println("No vehicle found with VIN: " + vin);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void delete(int id) {
-
+    public void delete(int vin) {
+    
     }
 }

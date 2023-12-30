@@ -91,4 +91,13 @@ public class VehiclesController {
         return newVehicle;
     }
 
+    @RequestMapping(path="/vehicles/update/{vin}",method=RequestMethod.PUT)
+    public void updateVehicle (
+            @PathVariable int vin,
+            @RequestBody Vehicle vehicle
+    )
+    {
+        jdbcVehiclesDAO.update(vin, vehicle);
+    }
+
 }
