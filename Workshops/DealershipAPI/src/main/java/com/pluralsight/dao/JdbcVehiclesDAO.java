@@ -442,6 +442,21 @@ public class JdbcVehiclesDAO implements VehiclesDAO {
 
     @Override
     public void delete(int vin) {
-    
+        String query = "DELETE FROM vehicles WHERE VIN = ? ";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement prepStatement = conn.prepareStatement(query)) {
+            prepStatement.setInt(1, vin);
+
+            int rows = prepStatement.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Vehicle with VIN: " + vin + " deleted successfully.");
+            } else {
+                System.out.println("No vehicle found with VIN: " + vin);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

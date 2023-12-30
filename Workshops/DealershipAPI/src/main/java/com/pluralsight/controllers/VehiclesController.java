@@ -100,4 +100,10 @@ public class VehiclesController {
         jdbcVehiclesDAO.update(vin, vehicle);
     }
 
+    @RequestMapping(path="/vehicles/delete/{vin}",method=RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteVehicle (@PathVariable int vin)
+    {
+        jdbcVehiclesDAO.delete(vin);
+    }
 }
