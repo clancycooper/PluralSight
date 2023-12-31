@@ -1,8 +1,7 @@
 package com.pluralsight.dao;
 
 import com.pluralsight.models.LeaseContract;
-import com.pluralsight.models.Vehicle;
-import org.apache.commons.dbcp2.BasicDataSource;
+import com.pluralsight.models.SalesContract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -53,6 +52,36 @@ public class JdbcLeaseContractDAO implements LeaseDAO {
             e.printStackTrace();
         }
         return allLeases;
+    }
+
+    @Override
+    public List<LeaseContract> getByID(int leaseID) {
+        List<LeaseContract> leaseByID = new ArrayList<>();
+        String query = "SELECT * FROM lease_contracts WHERE lease_id = ?;";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(query)) {
+            prepStatement.setInt(1, leaseID);
+
+            try (ResultSet result = prepStatement.executeQuery()) {
+                while (result.next()) {
+                    int VIN = result.getInt("VIN");
+                    int dealershipID = result.getInt("dealership_id");
+                    String firstName = result.getString("first_name");
+                    String lastName = result.getString("last_name");
+                    String address = result.getString("address");
+                    double amountPaid = result.getDouble("amount_paid");
+                    double amountDue = result.getDouble("amount_due");
+                    String startDate = result.getString("start_date");
+                    String endDate = result.getString("end_date");
+                    LeaseContract leaseContract = new LeaseContract(leaseID, VIN, dealershipID, firstName, lastName, address, startDate, endDate, amountPaid, amountDue);
+                    leaseByID.add(leaseContract);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return leaseByID;
     }
 
     @Override

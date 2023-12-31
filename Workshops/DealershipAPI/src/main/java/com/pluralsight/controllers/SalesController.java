@@ -1,12 +1,11 @@
 package com.pluralsight.controllers;
 
 import com.pluralsight.dao.JdbcSalesContractDAO;
-import com.pluralsight.models.LeaseContract;
 import com.pluralsight.models.SalesContract;
+import com.pluralsight.models.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +22,20 @@ public class SalesController {
     public List<SalesContract> getAllSales() {
         var sales = jdbcSalesContractDAO.getAllSales();
         return sales;
+    }
+
+    @RequestMapping(path = "/sales/id/{saleID}", method = RequestMethod.GET)
+    public List<SalesContract> getById(@PathVariable int saleID) {
+        var sales = jdbcSalesContractDAO.getById(saleID);
+        return sales;
+    }
+
+    @RequestMapping(path="/sales/add", method=RequestMethod.POST)
+    @ResponseStatus(value= HttpStatus.CREATED)
+    public SalesContract addSale(
+            @RequestBody SalesContract salesContract
+    ){
+        SalesContract newSale = jdbcSalesContractDAO.insertSale(salesContract);
+        return newSale;
     }
 }
